@@ -1,41 +1,26 @@
-# vite React TypeScript tailwindcss starter
+# Property Price Client
 
-Template for vite, React + tailwindcss + TypeScript projects with some tools preconfigured.
+A React TypeScript app with Vite which returns data suggested property offer price
 
-## About
+The list of repositories are as follow:
 
-Template for vite, React + tailwindcss + TypeScript projects with some tools preconfigured.
+- ASP.NET Core web API repository [here](https://github.com/MatthewCYLau/property-price-api)
+- React with Vite client repository [here](https://github.com/MatthewCYLau/property-price-client)
 
-![Screenshot](assets/screenshot.png)
-
-### Libraries
-
-- [React 18](https://reactjs.org/)
-- [React Router 6](https://reactrouter.com)
-- [tailwindcss 3](https://tailwindcss.com/)
-  - [tailwindcss forms plugin](https://tailwindcss-forms.vercel.app/)
-- [TypeScript 4.9.5](https://www.typescriptlang.org/)
-- [vite 4](https://vitejs.dev/)
-- [vitetest](https://vitest.dev/)
-
-### Tools
-
-- [commitlint 17](https://commitlint.js.org)
-- [Conventional Commits 1](https://www.conventionalcommits.org)
-- [editorconfig](https://editorconfig.org/)
-- [eslint 8](https://eslint.org/)
-- [husky 8](https://typicode.github.io/husky/#/)
-- [Prettier 2](https://prettier.io/)
-- [VS Code settings](https://code.visualstudio.com/)
-
-## Usage
-
-Create a new project from this template by clicking the "Use this template" button:
-
-![](assets/template-usage.png)
+## Run/build app locally
 
 ```bash
 yarn
 yarn dev
 yarn test
 ```
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
