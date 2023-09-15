@@ -2,6 +2,10 @@
 
 A React TypeScript app with Vite which returns data suggested property offer price
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/ec982bba-bd7a-46b0-830d-446487bf8a8e/deploy-status)](https://app.netlify.com/sites/creative-scone-eb4066/deploys)
+
+API URL here: [`https://creative-scone-eb4066.netlify.app/`](https://creative-scone-eb4066.netlify.app/)
+
 The list of repositories are as follow:
 
 - ASP.NET Core web API repository [here](https://github.com/MatthewCYLau/property-price-api)
