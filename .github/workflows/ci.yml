@@ -11,7 +11,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
-    needs: lint
     name: Build
     steps:
       - uses: actions/checkout@v3
