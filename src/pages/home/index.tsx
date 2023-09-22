@@ -15,13 +15,10 @@ const HomePage = (): ReactElement => {
             Returns smart property offer price
           </p>
           <div className="flex flex-col mt-4 sm:flex-row sm:items-center">
-            <CtaButton
-              copy="Login"
-              onClickHandler={() => console.log('login')}
-            />
+            <CtaButton copy="Login" onClickHandler={() => navigate('/login')} />
             <CtaButton
               copy="Sign up"
-              onClickHandler={() => console.log('sign up')}
+              onClickHandler={() => navigate('/sign-up')}
               isPrimaryCta={true}
             />
           </div>

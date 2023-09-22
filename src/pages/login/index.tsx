@@ -21,7 +21,7 @@ const LoginPage = (): ReactElement => {
         flex items-center justify-center"
       >
         <div className="w-full h-100">
-          <h1 className="text-xl md:text-2xl font-bold leading-tight mt-12">
+          <h1 className="text-xl md:text-2xl leading-tight mt-12">
             Log in to your account
           </h1>
 
@@ -54,7 +54,7 @@ const LoginPage = (): ReactElement => {
             <div className="text-right mt-2">
               <a
                 href="#"
-                className="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700"
+                className="text-sm text-gray-700 hover:text-blue-700 focus:text-blue-700"
               >
                 Forgot Password?
               </a>
@@ -62,7 +62,7 @@ const LoginPage = (): ReactElement => {
 
             <button
               type="submit"
-              className="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg
+              className="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white rounded-lg
               px-4 py-3 mt-6"
             >
               Log In
@@ -70,12 +70,9 @@ const LoginPage = (): ReactElement => {
           </form>
           <p className="mt-8">
             Need an account?{' '}
-            <a
-              href="#"
-              className="text-blue-500 hover:text-blue-700 font-semibold"
-            >
+            <button className="text-blue-500 hover:text-blue-700">
               Create an account
-            </a>
+            </button>
           </p>
         </div>
       </div>
