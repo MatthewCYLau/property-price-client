@@ -1,11 +1,12 @@
 import { ReactElement } from 'react'
-
+import { useNavigate } from 'react-router-dom'
 interface Values {
   email: string
   password: string
 }
 
 const LoginPage = (): ReactElement => {
+  const navigate = useNavigate()
   return (
     <div className="flex flex-col md:flex-row h-screen items-center">
       <div className="bg-indigo-600 hidden lg:block w-full md:w-1/2 xl:w-2/3 h-screen">
@@ -70,7 +71,10 @@ const LoginPage = (): ReactElement => {
           </form>
           <p className="mt-8">
             Need an account?{' '}
-            <button className="text-blue-500 hover:text-blue-700">
+            <button
+              onClick={() => navigate('/sign-up')}
+              className="text-blue-500 hover:text-blue-700"
+            >
               Create an account
             </button>
           </p>
