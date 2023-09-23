@@ -1,9 +1,7 @@
 import React from 'react'
 import { Actions as AuthActions } from './auth/actions'
 import { ActionType as AuthActionType } from './auth/action-types'
-import { Actions as AlertActions } from './alert/actions'
-import { ActionType as AlertActionType } from './alert/action-types'
-import { User, ActionType, AppAlert } from '../types'
+import { User } from '../types'
 
 export type AppState = {
   token: string | null
