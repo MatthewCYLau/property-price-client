@@ -1,5 +1,10 @@
-import { ReactElement } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { ReactElement, useState, useContext, ChangeEvent } from 'react'
+import axios, { AxiosResponse } from 'axios'
+import { Store } from '../../store'
+import { Token } from '../../types'
+import { ActionType as AuthActionType } from '../../store/auth/action-types'
+import { Link, useNavigate } from 'react-router-dom'
+
 interface Values {
   email: string
   password: string
@@ -7,6 +12,33 @@ interface Values {
 
 const LoginPage = (): ReactElement => {
   const navigate = useNavigate()
+  const [formValues, setFormValues] = useState<Values>({
+    email: '',
+    password: ''
+  })
+  const { state, dispatch } = useContext(Store)
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFormValues({ ...formValues, [e.target.name]: e.target.value })
+  }
+
+  const submitHandler = async (e: React.SyntheticEvent) => {
+    e.preventDefault()
+    try {
+      const { data }: AxiosResponse<Token> = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/auth`,
+        formValues,
+        {
+          headers: {
+            'content-type': 'application/json'
+          }
+        }
+      )
+      console.log('login success')
+      // dispatch({ type: AuthActionType.LOGIN_SUCCESS, payload: data })
+    } catch (err: any) {
+      console.log(err)
+    }
+  }
   return (
     <div className="flex flex-col md:flex-row h-screen items-center">
       <div className="bg-indigo-600 hidden lg:block w-full md:w-1/2 xl:w-2/3 h-screen">
@@ -26,16 +58,18 @@ const LoginPage = (): ReactElement => {
             Log in to your account
           </h1>
 
-          <form className="mt-6" action="#" method="POST">
+          <form className="mt-6" onSubmit={submitHandler}>
             <div>
               <label className="block text-gray-700">Email Address</label>
               <input
                 type="email"
-                name=""
-                id=""
+                name="email"
+                id="email"
                 placeholder="Enter Email Address"
                 className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
                 required
+                value={formValues.email}
+                onChange={(e) => onChange(e)}
               />
             </div>
 
@@ -43,12 +77,14 @@ const LoginPage = (): ReactElement => {
               <label className="block text-gray-700">Password</label>
               <input
                 type="password"
-                name=""
-                id=""
+                name="password"
+                id="password"
                 placeholder="Enter Password"
                 className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
                 focus:bg-white focus:outline-none"
                 required
+                value={formValues.password}
+                onChange={(e) => onChange(e)}
               />
             </div>
 
