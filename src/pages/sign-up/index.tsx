@@ -1,12 +1,61 @@
-import { ReactElement } from 'react'
-import { useNavigate } from 'react-router-dom'
+import {
+  ReactElement,
+  useState,
+  useContext,
+  ChangeEvent,
+  useEffect
+} from 'react'
+import axios, { AxiosResponse } from 'axios'
+import { Store } from '../../store'
+import { Token } from '../../types'
+import { ActionType as AuthActionType } from '../../store/auth/action-types'
+import { Link } from 'react-router-dom'
+
 interface Values {
   email: string
   password: string
+  passwordConfirm: string
 }
 
 const SignUpPage = (): ReactElement => {
-  const navigate = useNavigate()
+  const [disableSubmit, setDisableSubmit] = useState<boolean>(true)
+  const [formValues, setFormValues] = useState<Values>({
+    email: '',
+    password: '',
+    passwordConfirm: ''
+  })
+
+  const { dispatch } = useContext(Store)
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFormValues({ ...formValues, [e.target.name]: e.target.value })
+  }
+
+  const submitHandler = async (e: React.SyntheticEvent) => {
+    e.preventDefault()
+    try {
+      const { data }: AxiosResponse<Token> = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/users`,
+        {
+          email: formValues.email,
+          password: formValues.password,
+          userType: 'Renter'
+        },
+        {
+          headers: {
+            'content-type': 'application/json'
+          }
+        }
+      )
+      dispatch({ type: AuthActionType.REGISTRATION_SUCCESS, payload: data })
+    } catch (err: any) {
+      console.log(err)
+    }
+  }
+
+  useEffect(
+    () => setDisableSubmit(formValues.password !== formValues.passwordConfirm),
+    [formValues.passwordConfirm, formValues.password]
+  )
   return (
     <div className="flex flex-col md:flex-row h-screen items-center">
       <div className="bg-indigo-600 hidden lg:block w-full md:w-1/2 xl:w-2/3 h-screen">
@@ -26,16 +75,16 @@ const SignUpPage = (): ReactElement => {
             Sign up now!
           </h1>
 
-          <form className="mt-6" action="#" method="POST">
+          <form className="mt-6" onSubmit={submitHandler}>
             <div>
               <label className="block text-gray-700">Email Address</label>
               <input
                 type="email"
-                name=""
-                id=""
+                name="email"
+                id="email"
                 placeholder="Enter email address"
                 className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
-                required
+                onChange={(e) => onChange(e)}
               />
             </div>
 
@@ -43,12 +92,12 @@ const SignUpPage = (): ReactElement => {
               <label className="block text-gray-700">Password</label>
               <input
                 type="password"
-                name=""
-                id=""
+                name="password"
+                id="password"
                 placeholder="Enter password"
                 className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
                 focus:bg-white focus:outline-none"
-                required
+                onChange={(e) => onChange(e)}
               />
             </div>
 
@@ -56,27 +105,25 @@ const SignUpPage = (): ReactElement => {
               <label className="block text-gray-700">Confirm Password</label>
               <input
                 type="password"
-                name=""
-                id=""
-                placeholder="Enter password again"
+                name="passwordConfirm"
+                id="password-confirm"
+                placeholder="Confirm password"
                 className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
                 focus:bg-white focus:outline-none"
-                required
+                onChange={(e) => onChange(e)}
               />
             </div>
             <button
               type="submit"
+              disabled={disableSubmit}
               className="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white rounded-lg
               px-4 py-3 mt-6"
             >
               Sign up
             </button>
           </form>
-          <button
-            onClick={() => navigate('/')}
-            className="mt-4 text-blue-500 hover:text-blue-700"
-          >
-            Return home
+          <button className="mt-8 text-blue-500 hover:text-blue-700">
+            <Link to="/">Return home</Link>
           </button>
         </div>
       </div>
