@@ -121,10 +121,13 @@ const SignUpPage = (): ReactElement => {
             >
               Sign up
             </button>
+            <Link
+              className="mt-8 text-blue-500 hover:text-blue-700 inline-block"
+              to="/"
+            >
+              Return home
+            </Link>
           </form>
-          <button className="mt-8 text-blue-500 hover:text-blue-700">
-            <Link to="/">Return home</Link>
-          </button>
         </div>
       </div>
     </div>
