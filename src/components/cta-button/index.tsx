@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import * as cn from 'classnames'
+import cn from 'classnames'
 
 interface Props {
   copy: string
