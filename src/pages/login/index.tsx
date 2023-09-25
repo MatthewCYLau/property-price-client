@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from 'axios'
 import { Store } from '../../store'
 import { Token } from '../../types'
 import { ActionType as AuthActionType } from '../../store/auth/action-types'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 interface Values {
   email: string
@@ -34,11 +34,16 @@ const LoginPage = (): ReactElement => {
         }
       )
       console.log('login success')
-      // dispatch({ type: AuthActionType.LOGIN_SUCCESS, payload: data })
+      dispatch({ type: AuthActionType.LOGIN_SUCCESS, payload: data })
     } catch (err: any) {
       console.log(err)
     }
   }
+
+  if (state.isAuthenticated) {
+    navigate('/dashboard')
+  }
+
   return (
     <div className="flex flex-col md:flex-row h-screen items-center">
       <div className="bg-indigo-600 hidden lg:block w-full md:w-1/2 xl:w-2/3 h-screen">
