@@ -1,7 +1,16 @@
-import { FC } from 'react'
-import { Link } from 'react-router-dom'
+import { FC, ReactNode } from 'react'
 import HomeIcon from '../home-icon'
 import DocumentIcon from '../document-icon'
+import SideNavButton from '../side-nav-button'
+
+const sideNavButtons: {
+  toUrl: string
+  iconComponent: ReactNode
+  copy: string
+}[] = [
+  { toUrl: '/dashboard', iconComponent: <HomeIcon />, copy: 'Dashboard' },
+  { toUrl: '/dashboard', iconComponent: <DocumentIcon />, copy: 'Add Property' }
+]
 
 const Sidebar: FC = () => {
   return (
@@ -12,32 +21,14 @@ const Sidebar: FC = () => {
         </span>
       </div>
       <nav className="flex-1 overflow-hidden hover:overflow-y-auto">
-        <ul className="p-2 overflow-hidden">
-          <li>
-            <Link
-              to="/dashboard"
-              className="flex items-center p-2 space-x-2 rounded-md hover:bg-gray-100"
-            >
-              <span>
-                <HomeIcon />
-              </span>
-              <span>Dashboard</span>
-            </Link>
-          </li>
-        </ul>
-        <ul className="p-2 overflow-hidden">
-          <li>
-            <Link
-              to="/dashboard"
-              className="flex items-center p-2 space-x-2 rounded-md hover:bg-gray-100"
-            >
-              <span>
-                <DocumentIcon />
-              </span>
-              <span>Add Property</span>
-            </Link>
-          </li>
-        </ul>
+        {sideNavButtons.map((n, index) => (
+          <SideNavButton
+            index={index}
+            toUrl={n.toUrl}
+            iconComponent={n.iconComponent}
+            copy={n.copy}
+          />
+        ))}
       </nav>
     </aside>
   )
