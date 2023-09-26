@@ -2,8 +2,15 @@ export interface Token {
   token: string
 }
 export interface User {
-  _id: string
+  id: string
   email: string
   name: string
-  avatarImageUrl: string
+}
+
+export interface Property {
+  id: string
+  created: string
+  listingUrl: string
+  askingPrice: number
+  address: string
 }
