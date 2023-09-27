@@ -27,8 +27,8 @@ const AddPropertyPage = (): ReactElement => {
         `${import.meta.env.VITE_API_BASE_URL}/api/properties`,
         {
           listingUrl: formValues.listingUrl,
-          index: +formValues.askingPrice,
-          note: formValues.address
+          askingPrice: +formValues.askingPrice,
+          address: formValues.address
         },
         {
           headers: {
@@ -44,12 +44,14 @@ const AddPropertyPage = (): ReactElement => {
 
   return (
     <Layout>
-      <div className="grid grid-cols-1 gap-5 mt-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-5 mt-6 sm:grid-cols-2 lg:grid-cols-3">
         <form onSubmit={submitHandler}>
           <div className="mb-6">
             <input
               type="text"
-              placeholder="Email"
+              placeholder="Property listing URL"
+              name="listingUrl"
+              id="listingUrl"
               className="
                         w-full
                         rounded-md
@@ -64,12 +66,16 @@ const AddPropertyPage = (): ReactElement => {
                         focus-visible:shadow-none
                         focus:border-primary
                         "
+              value={formValues.listingUrl}
+              onChange={(e) => onChange(e)}
             />
           </div>
           <div className="mb-6">
             <input
-              type="password"
-              placeholder="Password"
+              type="text"
+              placeholder="Asking price"
+              name="askingPrice"
+              id="askingPrice"
               className="
                         w-full
                         rounded-md
@@ -84,6 +90,32 @@ const AddPropertyPage = (): ReactElement => {
                         focus-visible:shadow-none
                         focus:border-primary
                         "
+              value={formValues.askingPrice}
+              onChange={(e) => onChange(e)}
+            />
+          </div>
+          <div className="mb-6">
+            <input
+              type="text"
+              placeholder="Address"
+              name="address"
+              id="address"
+              className="
+                        w-full
+                        rounded-md
+                        border
+                        bordder-[#E9EDF4]
+                        py-3
+                        px-5
+                        bg-[#FCFDFE]
+                        text-base text-body-color
+                        placeholder-[#ACB6BE]
+                        outline-none
+                        focus-visible:shadow-none
+                        focus:border-primary
+                        "
+              value={formValues.address}
+              onChange={(e) => onChange(e)}
             />
           </div>
           <div className="mb-6">
