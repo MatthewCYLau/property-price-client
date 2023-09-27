@@ -9,7 +9,11 @@ const sideNavButtons: {
   copy: string
 }[] = [
   { toUrl: '/dashboard', iconComponent: <HomeIcon />, copy: 'Dashboard' },
-  { toUrl: '/dashboard', iconComponent: <DocumentIcon />, copy: 'Add Property' }
+  {
+    toUrl: '/add-property',
+    iconComponent: <DocumentIcon />,
+    copy: 'Add Property'
+  }
 ]
 
 const Sidebar: FC = () => {

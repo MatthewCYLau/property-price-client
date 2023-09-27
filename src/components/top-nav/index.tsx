@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom'
 import GithubIcon from '../../components/github-icon'
 
 const getHeader = (path: string): string => {
-  if (path.includes('create-property')) {
-    return 'Create Property'
+  if (path.includes('add-property')) {
+    return 'Add Property'
   }
 
   return 'Dashboard'
