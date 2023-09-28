@@ -35,7 +35,8 @@ const DashboardPage = (): ReactElement => {
           <Loader />
         ) : (
           <>
-            {!!properties.length &&
+            {Array.isArray(properties) &&
+              !!properties.length &&
               properties.map((n) => (
                 <PropertyCard
                   id={n.id}
