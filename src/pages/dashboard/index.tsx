@@ -25,7 +25,7 @@ const DashboardPage = (): ReactElement => {
 
   return (
     <Layout>
-      <div className="grid grid-cols-1 gap-5 mt-6 sm:grid-cols-2 lg:grid-cols-4">
+      {/* <div className="grid grid-cols-1 gap-5 mt-6 sm:grid-cols-2 lg:grid-cols-4">
         {properties && !!properties.length ? (
           <>
             {properties.map((n) => (
@@ -40,7 +40,7 @@ const DashboardPage = (): ReactElement => {
         ) : (
           <h1>No Property</h1>
         )}
-      </div>
+      </div> */}
       <h3 className="mt-6 text-xl">Recent Price Suggestions</h3>
       <div className="flex flex-col mt-6">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
