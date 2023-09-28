@@ -26,7 +26,7 @@ const DashboardPage = (): ReactElement => {
   return (
     <Layout>
       <div className="grid grid-cols-1 gap-5 mt-6 sm:grid-cols-2 lg:grid-cols-4">
-        {!!properties.length ? (
+        {properties && !!properties.length ? (
           <>
             {properties.map((n) => (
               <PropertyCard
