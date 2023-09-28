@@ -2,11 +2,14 @@ import { ReactElement, useState, useEffect } from 'react'
 import api from '../../utils/api'
 import { AxiosResponse } from 'axios'
 import Layout from '../../components/layout'
+import Loader from '../../components/loader'
+
 import { Property } from '../../types'
 import PropertyCard from '../../components/property-card'
 
 const DashboardPage = (): ReactElement => {
   const [properties, setProperties] = useState<Property[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const getProperties = async () => {
     try {
@@ -16,6 +19,8 @@ const DashboardPage = (): ReactElement => {
       setProperties(data)
     } catch (err) {
       console.log(err)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -25,23 +30,23 @@ const DashboardPage = (): ReactElement => {
 
   return (
     <Layout>
-      {console.log(properties)}
-      {/* <div className="grid grid-cols-1 gap-5 mt-6 sm:grid-cols-2 lg:grid-cols-4">
-        {properties && !!properties.length ? (
-          <>
-            {properties.map((n) => (
-              <PropertyCard
-                id={n.id}
-                address={n.address}
-                price={n.askingPrice}
-                created={new Date(Date.parse(n.created)).toDateString()}
-              />
-            ))}
-          </>
+      <div className="grid grid-cols-1 gap-5 mt-6 sm:grid-cols-2 lg:grid-cols-4">
+        {isLoading ? (
+          <Loader />
         ) : (
-          <h1>No Property</h1>
+          <>
+            {!!properties.length &&
+              properties.map((n) => (
+                <PropertyCard
+                  id={n.id}
+                  address={n.address}
+                  price={n.askingPrice}
+                  created={new Date(Date.parse(n.created)).toDateString()}
+                />
+              ))}
+          </>
         )}
-      </div> */}
+      </div>
       <h3 className="mt-6 text-xl">Recent Price Suggestions</h3>
       <div className="flex flex-col mt-6">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
