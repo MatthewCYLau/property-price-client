@@ -26,14 +26,15 @@ const Sidebar: FC = () => {
       </div>
       <nav className="flex-1 overflow-hidden hover:overflow-y-auto">
         <ul className="p-2 overflow-hidden">
-          {sideNavButtons.map((n, index) => (
-            <SideNavButton
-              index={index}
-              toUrl={n.toUrl}
-              iconComponent={n.iconComponent}
-              copy={n.copy}
-            />
-          ))}
+          {sideNavButtons &&
+            sideNavButtons.map((n, index) => (
+              <SideNavButton
+                index={index}
+                toUrl={n.toUrl}
+                iconComponent={n.iconComponent}
+                copy={n.copy}
+              />
+            ))}
         </ul>
       </nav>
     </aside>
