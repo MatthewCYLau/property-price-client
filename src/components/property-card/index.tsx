@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { Link } from 'react-router-dom'
 
 interface Props {
   id: string
@@ -9,8 +10,8 @@ interface Props {
 
 const PropertyCard: FC<Props> = ({ id, address, price, created }) => {
   return (
-    <div
-      key={id}
+    <Link
+      to={`/properties/${id}`}
       className="p-4 transition-shadow border rounded-lg shadow-sm hover:shadow-lg"
     >
       <div className="flex items-start justify-between">
@@ -28,7 +29,7 @@ const PropertyCard: FC<Props> = ({ id, address, price, created }) => {
         </span>
         <span>{created}</span>
       </div>
-    </div>
+    </Link>
   )
 }
 
