@@ -55,6 +55,7 @@ const DashboardPage = (): ReactElement => {
             {!!properties.length &&
               properties.map((n) => (
                 <PropertyCard
+                  key={n.id}
                   id={n.id}
                   address={n.address}
                   price={n.askingPrice}
@@ -96,6 +97,7 @@ const DashboardPage = (): ReactElement => {
                   {!!priceSuggestions.length &&
                     priceSuggestions.map((n) => (
                       <TableRow
+                        key={n.id}
                         id={n.id}
                         address={n.property.address}
                         askingPrice={n.property.askingPrice}

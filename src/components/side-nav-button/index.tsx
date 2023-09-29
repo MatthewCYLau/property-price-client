@@ -10,7 +10,7 @@ interface Props {
 
 const SideNavButton: FC<Props> = ({ index, toUrl, iconComponent, copy }) => {
   return (
-    <li key={index}>
+    <li>
       <Link
         to={toUrl}
         className="flex items-center p-2 space-x-2 rounded-md hover:bg-gray-100"

@@ -34,6 +34,7 @@ const Sidebar: FC = () => {
         <ul className="p-2 overflow-hidden">
           {sideNavButtons.map((n, index) => (
             <SideNavButton
+              key={index}
               index={index}
               toUrl={n.toUrl}
               iconComponent={n.iconComponent}
