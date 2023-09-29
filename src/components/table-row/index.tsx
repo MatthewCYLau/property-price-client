@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import PricePill from '../price-pill/index'
 
 interface Props {
   id: string
@@ -30,9 +31,7 @@ const TableRow: FC<Props> = ({
         <div className="text-sm text-gray-900">
           {`${differenceInPercentage}%`}
         </div>
-        <span className="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
-          Below asking
-        </span>
+        <PricePill differenceInPercentage={differenceInPercentage} />
       </td>
     </tr>
   )
