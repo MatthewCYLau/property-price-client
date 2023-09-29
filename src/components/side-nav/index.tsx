@@ -1,4 +1,7 @@
-import { FC, ReactNode } from 'react'
+import { FC, ReactNode, useContext } from 'react'
+import { Store } from '../../store'
+import { ActionType as AuthActionType } from '../../store/auth/action-types'
+import LogoutIcon from '../logout-icon'
 import HomeIcon from '../home-icon'
 import DocumentIcon from '../document-icon'
 import SideNavButton from '../side-nav-button'
@@ -17,6 +20,9 @@ const sideNavButtons: {
 ]
 
 const Sidebar: FC = () => {
+  const { dispatch } = useContext(Store)
+  const logout = () => dispatch({ type: AuthActionType.LOGOUT })
+
   return (
     <aside className="hidden inset-y-0 z-10 flex flex-col flex-shrink-0 w-64 max-h-screen overflow-hidden transition-all transform bg-white border-r shadow-lg z-auto md:block md:static shadow">
       <div className="flex items-center justify-between flex-shrink-0 p-2">
@@ -34,6 +40,17 @@ const Sidebar: FC = () => {
               copy={n.copy}
             />
           ))}
+          <li>
+            <button
+              onClick={logout}
+              className="w-full flex items-center p-2 space-x-2 rounded-md hover:bg-gray-100"
+            >
+              <span>
+                <LogoutIcon />
+              </span>
+              <span>Logout</span>
+            </button>
+          </li>
         </ul>
       </nav>
     </aside>
