@@ -14,3 +14,9 @@ export interface Property {
   askingPrice: number
   address: string
 }
+
+export interface PriceSuggestion {
+  id: string
+  differenceInPercentage: number
+  property: Property
+}

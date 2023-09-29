@@ -4,11 +4,16 @@ import { AxiosResponse } from 'axios'
 import Layout from '../../components/layout'
 import Loader from '../../components/loader'
 
-import { Property } from '../../types'
+import { Property, PriceSuggestion } from '../../types'
 import PropertyCard from '../../components/property-card'
+import TableRow from '../../components/table-row'
 
 const DashboardPage = (): ReactElement => {
   const [properties, setProperties] = useState<Property[]>([])
+  const [priceSuggestions, setPriceSuggestions] = useState<PriceSuggestion[]>(
+    []
+  )
+
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const getProperties = async () => {
@@ -24,8 +29,20 @@ const DashboardPage = (): ReactElement => {
     }
   }
 
+  const getPriceSuggestions = async () => {
+    try {
+      const { data }: AxiosResponse<PriceSuggestion[]> = await api.get(
+        `${import.meta.env.VITE_API_BASE_URL}/api/price-suggestions`
+      )
+      setPriceSuggestions(data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   useEffect(() => {
     getProperties()
+    getPriceSuggestions()
   }, [])
 
   return (
@@ -76,44 +93,15 @@ const DashboardPage = (): ReactElement => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  <tr className="transition-all hover:bg-gray-100 hover:shadow-lg">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="ml-4">
-                        <div className="text-sm font-medium text-gray-900">
-                          Gordon Road
-                        </div>
-                        <div className="text-sm text-gray-500">London</div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">£100,000</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">+10%</div>
-                      <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                        Above asking
-                      </span>
-                    </td>
-                  </tr>
-                  <tr className="transition-all hover:bg-gray-100 hover:shadow-lg">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="ml-4">
-                        <div className="text-sm font-medium text-gray-900">
-                          Bankside
-                        </div>
-                        <div className="text-sm text-gray-500">London</div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">£500,000</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">-10%</div>
-                      <span className="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
-                        Below asking
-                      </span>
-                    </td>
-                  </tr>
+                  {!!priceSuggestions.length &&
+                    priceSuggestions.map((n) => (
+                      <TableRow
+                        id={n.id}
+                        address={n.property.address}
+                        askingPrice={n.property.askingPrice}
+                        differenceInPercentage={n.differenceInPercentage}
+                      />
+                    ))}
                 </tbody>
               </table>
             </div>
