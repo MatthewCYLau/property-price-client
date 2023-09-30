@@ -93,7 +93,7 @@ const PropertyPage = (): ReactElement => {
         ) : (
           <>
             <PropertyCard
-              id={property.id}
+              listingUrl={property.listingUrl}
               address={property.address}
               price={property.askingPrice}
               created={new Date(Date.parse(property.created)).toDateString()}

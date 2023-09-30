@@ -1,9 +1,9 @@
 import { ReactElement, useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import api from '../../utils/api'
 import { AxiosResponse } from 'axios'
 import Layout from '../../components/layout'
 import Loader from '../../components/loader'
-
 import { Property, PriceSuggestion } from '../../types'
 import PropertyCard from '../../components/property-card'
 import TableRow from '../../components/table-row'
@@ -54,13 +54,14 @@ const DashboardPage = (): ReactElement => {
           <>
             {!!properties.length &&
               properties.map((n) => (
-                <PropertyCard
-                  key={n.id}
-                  id={n.id}
-                  address={n.address}
-                  price={n.askingPrice}
-                  created={new Date(Date.parse(n.created)).toDateString()}
-                />
+                <Link to={`/properties/${n.id}`}>
+                  <PropertyCard
+                    key={n.id}
+                    address={n.address}
+                    price={n.askingPrice}
+                    created={new Date(Date.parse(n.created)).toDateString()}
+                  />
+                </Link>
               ))}
           </>
         )}

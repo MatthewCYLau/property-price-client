@@ -2,18 +2,15 @@ import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
 interface Props {
-  id: string
   address: string
+  listingUrl?: string
   price: number
   created: string
 }
 
-const PropertyCard: FC<Props> = ({ id, address, price, created }) => {
+const PropertyCard: FC<Props> = ({ address, price, created, listingUrl }) => {
   return (
-    <Link
-      to={`/properties/${id}`}
-      className="p-4 transition-shadow border rounded-lg shadow-sm hover:shadow-lg"
-    >
+    <div className="p-4 transition-shadow border rounded-lg shadow-sm hover:shadow-lg">
       <div className="flex items-start justify-between">
         <div className="flex flex-col space-y-2">
           <span className="text-gray-400">{address}</span>
@@ -29,7 +26,17 @@ const PropertyCard: FC<Props> = ({ id, address, price, created }) => {
         </span>
         <span>{created}</span>
       </div>
-    </Link>
+      {listingUrl && (
+        <Link target="_blank" to={listingUrl}>
+          <button
+            className="w-2/3 block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white rounded-lg
+              px-4 py-3 mt-6"
+          >
+            View property listing
+          </button>
+        </Link>
+      )}
+    </div>
   )
 }
 
