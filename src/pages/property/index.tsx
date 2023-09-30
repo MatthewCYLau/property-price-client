@@ -7,6 +7,7 @@ import Layout from '../../components/layout'
 import Loader from '../../components/loader'
 import { Property } from '../../types'
 import PropertyCard from '../../components/property-card'
+import CtaButton from '../../components/cta-button'
 
 interface Values {
   differenceInPercentage: number
@@ -128,13 +129,7 @@ const PropertyPage = (): ReactElement => {
               <span className="m-auto text-2xl font-thin">+</span>
             </button>
           </div>
-          <button
-            type="submit"
-            className="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white rounded-lg
-              px-4 py-3 mt-6"
-          >
-            Submit suggestion
-          </button>
+          <CtaButton copy="Submit suggestion" />
         </form>
       </div>
     </Layout>

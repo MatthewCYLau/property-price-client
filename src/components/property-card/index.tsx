@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import CtaButton from '../../components/cta-button'
 import { Link } from 'react-router-dom'
 
 interface Props {
@@ -28,12 +29,7 @@ const PropertyCard: FC<Props> = ({ address, price, created, listingUrl }) => {
       </div>
       {listingUrl && (
         <Link target="_blank" to={listingUrl}>
-          <button
-            className="w-2/3 block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white rounded-lg
-              px-4 py-3 mt-6"
-          >
-            View property listing
-          </button>
+          <CtaButton copy="View property listing" type="button" />
         </Link>
       )}
     </div>

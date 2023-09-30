@@ -8,6 +8,7 @@ import {
 import axios, { AxiosResponse } from 'axios'
 import { Store } from '../../store'
 import { Token } from '../../types'
+import CtaButton from '../../components/cta-button'
 import { ActionType as AuthActionType } from '../../store/auth/action-types'
 import { Link } from 'react-router-dom'
 
@@ -113,14 +114,7 @@ const SignUpPage = (): ReactElement => {
                 onChange={(e) => onChange(e)}
               />
             </div>
-            <button
-              type="submit"
-              disabled={disableSubmit}
-              className="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white rounded-lg
-              px-4 py-3 mt-6"
-            >
-              Sign up
-            </button>
+            <CtaButton disableSubmit={disableSubmit} copy="Sign up" />
             <Link
               className="mt-8 text-blue-500 hover:text-blue-700 inline-block"
               to="/"

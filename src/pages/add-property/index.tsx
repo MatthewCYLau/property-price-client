@@ -1,6 +1,7 @@
 import { ReactElement, useState, ChangeEvent } from 'react'
 import api from '../../utils/api'
 import { useNavigate } from 'react-router-dom'
+import CtaButton from '../../components/cta-button'
 import Layout from '../../components/layout'
 interface Values {
   listingUrl: string
@@ -47,84 +48,43 @@ const AddPropertyPage = (): ReactElement => {
       <div className="grid grid-cols-1 gap-5 mt-6 sm:grid-cols-2 lg:grid-cols-3">
         <form onSubmit={submitHandler}>
           <div className="mb-6">
+            <label className="block text-gray-700">Property listing URL</label>
             <input
               type="text"
-              placeholder="Property listing URL"
+              placeholder="https://www.rightmove.co.uk/properties/137704190"
               name="listingUrl"
               id="listingUrl"
-              className="
-                        w-full
-                        rounded-md
-                        border
-                        bordder-[#E9EDF4]
-                        py-3
-                        px-5
-                        bg-[#FCFDFE]
-                        text-base text-body-color
-                        placeholder-[#ACB6BE]
-                        outline-none
-                        focus-visible:shadow-none
-                        focus:border-primary
-                        "
+              className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
               value={formValues.listingUrl}
               onChange={(e) => onChange(e)}
             />
           </div>
           <div className="mb-6">
+            <label className="block text-gray-700">Asking price</label>
             <input
               type="text"
               placeholder="Asking price"
               name="askingPrice"
               id="askingPrice"
-              className="
-                        w-full
-                        rounded-md
-                        border
-                        bordder-[#E9EDF4]
-                        py-3
-                        px-5
-                        bg-[#FCFDFE]
-                        text-base text-body-color
-                        placeholder-[#ACB6BE]
-                        outline-none
-                        focus-visible:shadow-none
-                        focus:border-primary
-                        "
+              className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
               value={formValues.askingPrice}
               onChange={(e) => onChange(e)}
             />
           </div>
           <div className="mb-6">
+            <label className="block text-gray-700">Address</label>
             <input
               type="text"
-              placeholder="Address"
+              placeholder="Montpelier Road, Sutton, London"
               name="address"
               id="address"
-              className="
-                        w-full
-                        rounded-md
-                        border
-                        bordder-[#E9EDF4]
-                        py-3
-                        px-5
-                        bg-[#FCFDFE]
-                        text-base text-body-color
-                        placeholder-[#ACB6BE]
-                        outline-none
-                        focus-visible:shadow-none
-                        focus:border-primary
-                        "
+              className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
               value={formValues.address}
               onChange={(e) => onChange(e)}
             />
           </div>
           <div className="mb-6">
-            <button
-              type="submit"
-              className="w-full px-3 py-4 text-white bg-indigo-500 rounded-md focus:bg-indigo-600 focus:outline-none"
-            >
-              Add Property
-            </button>
+            <CtaButton copy="Add Property" />
           </div>
         </form>
       </div>

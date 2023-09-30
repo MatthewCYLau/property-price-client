@@ -1,6 +1,6 @@
 import { ReactElement } from 'react'
 import { useNavigate } from 'react-router-dom'
-import CtaButton from '../../components/cta-button'
+import CtaButton from '../../components/cta-button2'
 
 const HomePage = (): ReactElement => {
   const navigate = useNavigate()

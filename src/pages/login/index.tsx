@@ -2,6 +2,7 @@ import { ReactElement, useState, useContext, ChangeEvent } from 'react'
 import axios, { AxiosResponse } from 'axios'
 import { Store } from '../../store'
 import { Token } from '../../types'
+import CtaButton from '../../components/cta-button'
 import { ActionType as AuthActionType } from '../../store/auth/action-types'
 import { useNavigate } from 'react-router-dom'
 
@@ -101,14 +102,7 @@ const LoginPage = (): ReactElement => {
                 Forgot Password?
               </a>
             </div>
-
-            <button
-              type="submit"
-              className="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white rounded-lg
-              px-4 py-3 mt-6"
-            >
-              Log In
-            </button>
+            <CtaButton copy="Login" />
           </form>
           <p className="mt-8">
             Need an account?{' '}
