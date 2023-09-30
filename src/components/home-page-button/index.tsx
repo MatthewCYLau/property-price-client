@@ -7,7 +7,7 @@ interface Props {
   onClickHandler: () => void
 }
 
-const CtaButton: FC<Props> = ({
+const HomePageButton: FC<Props> = ({
   copy,
   onClickHandler,
   isPrimaryCta = false
@@ -16,7 +16,7 @@ const CtaButton: FC<Props> = ({
     <button
       onClick={onClickHandler}
       className={cn(
-        'inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center mr-3 last:mr-0',
+        'inline-flex items-center justify-center px-10 py-3 text-base font-medium text-center mr-3 last:mr-0',
         {
           'text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900':
             isPrimaryCta,
@@ -30,4 +30,4 @@ const CtaButton: FC<Props> = ({
   )
 }
 
-export default CtaButton
+export default HomePageButton

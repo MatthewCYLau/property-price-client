@@ -1,6 +1,6 @@
 import { ReactElement } from 'react'
 import { useNavigate } from 'react-router-dom'
-import CtaButton from '../../components/cta-button2'
+import HomePageButton from '../../components/home-page-button'
 
 const HomePage = (): ReactElement => {
   const navigate = useNavigate()
@@ -15,8 +15,11 @@ const HomePage = (): ReactElement => {
             Returns smart property offer price
           </p>
           <div className="flex flex-col mt-4 sm:flex-row sm:items-center">
-            <CtaButton copy="Login" onClickHandler={() => navigate('/login')} />
-            <CtaButton
+            <HomePageButton
+              copy="Login"
+              onClickHandler={() => navigate('/login')}
+            />
+            <HomePageButton
               copy="Sign up"
               onClickHandler={() => navigate('/sign-up')}
               isPrimaryCta={true}
