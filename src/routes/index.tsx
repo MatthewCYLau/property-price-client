@@ -4,6 +4,7 @@ import HomePage from '../pages/home'
 import SignUpPage from '../pages/sign-up'
 import LoginPage from '../pages/login'
 import DashboardPage from '../pages/dashboard'
+import PropertyPage from '../pages/property'
 import { useContext } from 'react'
 import { Store } from '../store'
 import AddPropertyPage from '../pages/add-property'
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
   {
     path: '/add-property',
     element: <PrivateRoute component={AddPropertyPage} />
+  },
+  {
+    path: '/properties/:id',
+    element: <PrivateRoute component={PropertyPage} />
   },
   {
     path: '/*',

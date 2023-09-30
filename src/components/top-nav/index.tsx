@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { Link } from 'react-router-dom'
-import GithubIcon from '../../components/github-icon'
+import GithubIcon from '../../components/icons/github-icon'
 
 const getHeader = (path: string): string => {
   if (path.includes('add-property')) {

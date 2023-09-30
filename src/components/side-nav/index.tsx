@@ -1,8 +1,8 @@
 import { FC, ReactNode, useContext } from 'react'
 import { Store } from '../../store'
 import { ActionType as AuthActionType } from '../../store/auth/action-types'
-import LogoutIcon from '../logout-icon'
-import HomeIcon from '../home-icon'
+import LogoutIcon from '../icons/logout-icon'
+import HomeIcon from '../icons/home-icon'
 import DocumentIcon from '../document-icon'
 import SideNavButton from '../side-nav-button'
 
