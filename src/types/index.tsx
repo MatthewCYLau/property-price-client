@@ -20,3 +20,8 @@ export interface PriceSuggestion {
   differenceInPercentage: number
   property: Property
 }
+
+export interface PriceAnalysis {
+  suggestedPrice: number
+  percentageDifferenceFromAskingPrice: number
+}

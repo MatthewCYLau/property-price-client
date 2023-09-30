@@ -5,7 +5,7 @@ import { AxiosResponse } from 'axios'
 import { useParams } from 'react-router-dom'
 import Layout from '../../components/layout'
 import Loader from '../../components/loader'
-import { Property } from '../../types'
+import { Property, PriceAnalysis } from '../../types'
 import PropertyCard from '../../components/property-card'
 import CtaButton from '../../components/cta-button'
 
@@ -27,6 +27,11 @@ const PropertyPage = (): ReactElement => {
     address: ''
   })
 
+  const [priceAnalysis, setPriceAnalysis] = useState<PriceAnalysis>({
+    suggestedPrice: 0,
+    percentageDifferenceFromAskingPrice: 0
+  })
+
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const getPropertyById = async (id: string) => {
     setIsLoading(true)
@@ -41,6 +46,21 @@ const PropertyPage = (): ReactElement => {
       setIsLoading(false)
     }
   }
+
+  const getPriceAnalysisByPropertyId = async (id: string) => {
+    setIsLoading(true)
+    try {
+      const { data }: AxiosResponse<PriceAnalysis> = await api.get(
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/properties/${id}/price-analysis`
+      )
+      setPriceAnalysis(data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value })
   }
@@ -84,6 +104,7 @@ const PropertyPage = (): ReactElement => {
 
   useEffect(() => {
     id && getPropertyById(id)
+    id && getPriceAnalysisByPropertyId(id)
   }, [])
 
   return (
@@ -101,6 +122,31 @@ const PropertyPage = (): ReactElement => {
             />
           </>
         )}
+        <div className="flex flex-col	justify-center	">
+          <h5 className="text-xl text-gray-600 text-center">
+            Suggested offer price
+          </h5>
+          <div className="mt-2 flex justify-center gap-4">
+            <h3 className="text-3xl font-bold text-gray-700">{`£${priceAnalysis.suggestedPrice.toLocaleString()}`}</h3>
+            <div className="flex items-end gap-1 text-red-500">
+              <svg
+                className="w-3 rotate-180	-translate-y-1.5"
+                viewBox="0 0 12 15"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6.00001 0L12 8H-3.05176e-05L6.00001 0Z"
+                  fill="currentColor"
+                />
+              </svg>
+              <span>{`${priceAnalysis.percentageDifferenceFromAskingPrice}%`}</span>
+            </div>
+          </div>
+          <span className="block text-center text-gray-500">
+            {`Compared to asking price £${property.askingPrice.toLocaleString()}`}
+          </span>
+        </div>
       </div>
       <div className="grid grid-cols-1 gap-5 mt-6 sm:grid-cols-2 lg:grid-cols-4">
         <form className="h-10" onSubmit={submitHandler}>
