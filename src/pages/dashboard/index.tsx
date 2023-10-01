@@ -40,6 +40,17 @@ const DashboardPage = (): ReactElement => {
     }
   }
 
+  const deletePriceSuggestionById = async (id: string) => {
+    try {
+      await api.delete(
+        `${import.meta.env.VITE_API_BASE_URL}/api/price-suggestions/${id}`
+      )
+      getPriceSuggestions()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   useEffect(() => {
     getProperties()
     getPriceSuggestions()
@@ -92,6 +103,12 @@ const DashboardPage = (): ReactElement => {
                     >
                       Offer price suggestion
                     </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+                    >
+                      Action
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -103,6 +120,7 @@ const DashboardPage = (): ReactElement => {
                         address={n.property.address}
                         askingPrice={n.property.askingPrice}
                         differenceInPercentage={n.differenceInPercentage}
+                        onDeleteHandler={() => deletePriceSuggestionById(n.id)}
                       />
                     ))}
                 </tbody>

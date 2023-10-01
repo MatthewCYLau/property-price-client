@@ -1,18 +1,20 @@
 import { FC } from 'react'
 import PricePill from '../price-pill/index'
+import DeleteIcon from '../icons/delete-icon'
 
 interface Props {
   id: string
   address: string
   askingPrice: number
   differenceInPercentage: number
+  onDeleteHandler: () => void
 }
 
 const TableRow: FC<Props> = ({
-  id,
   address,
   askingPrice,
-  differenceInPercentage
+  differenceInPercentage,
+  onDeleteHandler
 }) => {
   return (
     <tr className="transition-all hover:bg-gray-100 hover:shadow-lg">
@@ -32,6 +34,11 @@ const TableRow: FC<Props> = ({
           {`${differenceInPercentage}%`}
         </div>
         <PricePill differenceInPercentage={differenceInPercentage} />
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap">
+        <button onClick={onDeleteHandler} className="hover:text-white">
+          <DeleteIcon />
+        </button>
       </td>
     </tr>
   )
