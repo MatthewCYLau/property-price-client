@@ -6,11 +6,13 @@ import {
   useEffect
 } from 'react'
 import axios, { AxiosResponse } from 'axios'
+import { v4 as uuid } from 'uuid'
 import { Store } from '../../store'
 import { Token } from '../../types'
 import CtaButton from '../../components/cta-button'
 import { ActionType as AuthActionType } from '../../store/auth/action-types'
-import { Link } from 'react-router-dom'
+import { ActionType as AlertActionType } from '../../store/alert/action-types'
+import { Link, useNavigate } from 'react-router-dom'
 
 interface Values {
   email: string
@@ -19,6 +21,7 @@ interface Values {
 }
 
 const SignUpPage = (): ReactElement => {
+  const navigate = useNavigate()
   const [disableSubmit, setDisableSubmit] = useState<boolean>(true)
   const [formValues, setFormValues] = useState<Values>({
     email: '',
@@ -26,7 +29,7 @@ const SignUpPage = (): ReactElement => {
     passwordConfirm: ''
   })
 
-  const { dispatch } = useContext(Store)
+  const { state, dispatch } = useContext(Store)
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value })
   }
@@ -49,14 +52,25 @@ const SignUpPage = (): ReactElement => {
       )
       dispatch({ type: AuthActionType.REGISTRATION_SUCCESS, payload: data })
     } catch (err: any) {
-      console.log(err)
+      const error: Error = err.response.data
+      dispatch({
+        type: AlertActionType.SET_ALERT,
+        payload: { id: uuid(), message: error.message, severity: 'error' }
+      })
     }
   }
 
   useEffect(
-    () => setDisableSubmit(formValues.password !== formValues.passwordConfirm),
-    [formValues.passwordConfirm, formValues.password]
+    () =>
+      setDisableSubmit(
+        !formValues.email || formValues.password !== formValues.passwordConfirm
+      ),
+    [formValues.email, formValues.passwordConfirm, formValues.password]
   )
+
+  if (state.isAuthenticated) {
+    navigate('/dashboard')
+  }
   return (
     <div className="flex flex-col md:flex-row h-screen items-center">
       <div className="bg-indigo-600 hidden lg:block w-full md:w-1/2 xl:w-2/3 h-screen">
