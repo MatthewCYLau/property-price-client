@@ -1,9 +1,11 @@
 import { ReactElement, useState, useContext, ChangeEvent } from 'react'
 import axios, { AxiosResponse } from 'axios'
+import { v4 as uuid } from 'uuid'
 import { Store } from '../../store'
 import { Token } from '../../types'
 import CtaButton from '../../components/cta-button'
 import { ActionType as AuthActionType } from '../../store/auth/action-types'
+import { ActionType as AlertActionType } from '../../store/alert/action-types'
 import { useNavigate } from 'react-router-dom'
 
 interface Values {
@@ -34,10 +36,13 @@ const LoginPage = (): ReactElement => {
           }
         }
       )
-      console.log('login success')
       dispatch({ type: AuthActionType.LOGIN_SUCCESS, payload: data })
     } catch (err: any) {
-      console.log(err)
+      const error: Error = err.response.data
+      dispatch({
+        type: AlertActionType.SET_ALERT,
+        payload: { id: uuid(), message: error.message, severity: 'error' }
+      })
     }
   }
 

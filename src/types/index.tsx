@@ -25,3 +25,9 @@ export interface PriceAnalysis {
   suggestedPrice: number
   percentageDifferenceFromAskingPrice: number
 }
+
+export interface Alert {
+  id: string
+  message: string
+  severity: 'error' | 'info'
+}

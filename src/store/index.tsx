@@ -1,12 +1,14 @@
 import React from 'react'
 import { Actions as AuthActions } from './auth/actions'
 import { ActionType as AuthActionType } from './auth/action-types'
-import { User } from '../types'
+import { Actions as AlertActions } from './alert/actions'
+import { ActionType as AlertActionType } from './alert/action-types'
+import { User, Alert } from '../types'
 
 export type AppState = {
   token: string | null
   isAuthenticated: boolean
-  loading: boolean
+  alerts: Alert[]
   user:
     | User
     | {
@@ -20,7 +22,7 @@ export type AppState = {
 const initialState: AppState = {
   token: localStorage.getItem('token'),
   isAuthenticated: false,
-  loading: true,
+  alerts: [],
   user: {
     _id: '',
     email: '',
@@ -29,7 +31,7 @@ const initialState: AppState = {
   }
 }
 
-type Action = AuthActions
+type Action = AuthActions | AlertActions
 
 function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
@@ -37,7 +39,6 @@ function reducer(state: AppState, action: Action): AppState {
       return {
         ...state,
         isAuthenticated: true,
-        loading: false,
         user: action.payload
       }
     case AuthActionType.LOGIN_SUCCESS:
@@ -48,13 +49,22 @@ function reducer(state: AppState, action: Action): AppState {
         ...state,
         token: null,
         isAuthenticated: false,
-        loading: false,
         user: {
           _id: '',
           email: '',
           name: '',
           avatarImageUrl: ''
         }
+      }
+    case AlertActionType.SET_ALERT:
+      return {
+        ...state,
+        alerts: [...state.alerts, action.payload]
+      }
+    case AlertActionType.REMOVE_ALERT:
+      return {
+        ...state,
+        alerts: state.alerts.filter((alert) => alert.id !== action.payload)
       }
     default:
       return state
