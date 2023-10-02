@@ -107,6 +107,12 @@ const DashboardPage = (): ReactElement => {
                       scope="col"
                       className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
                     >
+                      Reason
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+                    >
                       Action
                     </th>
                   </tr>
@@ -120,6 +126,7 @@ const DashboardPage = (): ReactElement => {
                         address={n.property.address}
                         askingPrice={n.property.askingPrice}
                         differenceInPercentage={n.differenceInPercentage}
+                        note={n.note}
                         onDeleteHandler={() => deletePriceSuggestionById(n.id)}
                       />
                     ))}

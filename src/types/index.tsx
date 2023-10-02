@@ -18,6 +18,7 @@ export interface Property {
 export interface PriceSuggestion {
   id: string
   differenceInPercentage: number
+  note: string
   property: Property
 }
 

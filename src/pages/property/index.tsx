@@ -12,13 +12,15 @@ import PriceAnalysisCard from '../../components/price-analysis-card'
 
 interface Values {
   differenceInPercentage: number
+  note: string
 }
 
 const PropertyPage = (): ReactElement => {
   const { id } = useParams()
   const navigate = useNavigate()
   const [formValues, setFormValues] = useState<Values>({
-    differenceInPercentage: 0
+    differenceInPercentage: 0,
+    note: ''
   })
   const [property, setProperty] = useState<Property>({
     id: '',
@@ -73,6 +75,7 @@ const PropertyPage = (): ReactElement => {
         `${import.meta.env.VITE_API_BASE_URL}/api/price-suggestions`,
         {
           differenceInPercentage: +formValues.differenceInPercentage,
+          note: formValues.note,
           propertyId: id
         },
         {
@@ -136,7 +139,7 @@ const PropertyPage = (): ReactElement => {
           <label className="block text-gray-700">
             Offer price suggestion (% from asking)
           </label>
-          <div className="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
+          <div className="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1 mb-6">
             <button
               onClick={decrementHandler}
               className="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-1/4 rounded-l cursor-pointer outline-none"
@@ -158,6 +161,16 @@ const PropertyPage = (): ReactElement => {
               <span className="m-auto text-2xl font-thin">+</span>
             </button>
           </div>
+          <label className="block text-gray-700">Tell us why</label>
+          <input
+            type="text"
+            placeholder="Tell us why"
+            name="note"
+            id="note"
+            className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+            value={formValues.note}
+            onChange={(e) => onChange(e)}
+          />
           <CtaButton copy="Submit suggestion" />
         </form>
       </div>
