@@ -1,14 +1,16 @@
-import { ReactElement, useState, useEffect } from 'react'
+import { ReactElement, useState, useEffect, useContext } from 'react'
+import { Store } from '../../store'
 import { Link } from 'react-router-dom'
 import api from '../../utils/api'
 import { AxiosResponse } from 'axios'
 import Layout from '../../components/layout'
 import Loader from '../../components/loader'
-import { Property, PriceSuggestion } from '../../types'
+import { Property, PriceSuggestion, ModalActionType } from '../../types'
 import PropertyCard from '../../components/property-card'
 import TableRow from '../../components/table-row'
 
 const DashboardPage = (): ReactElement => {
+  const { dispatch } = useContext(Store)
   const [properties, setProperties] = useState<Property[]>([])
   const [priceSuggestions, setPriceSuggestions] = useState<PriceSuggestion[]>(
     []
@@ -49,6 +51,20 @@ const DashboardPage = (): ReactElement => {
     } catch (err) {
       console.log(err)
     }
+  }
+
+  const handleOnAlertDelete = (id: string) => {
+    dispatch({
+      type: ModalActionType.SET_MODAL,
+      payload: {
+        message: 'Do you want to delete price suggestion?',
+        onCancel: () => dispatch({ type: ModalActionType.REMOVE_MODAL }),
+        onConfirm: () => {
+          dispatch({ type: ModalActionType.REMOVE_MODAL })
+          deletePriceSuggestionById(id)
+        }
+      }
+    })
   }
 
   useEffect(() => {
@@ -127,7 +143,7 @@ const DashboardPage = (): ReactElement => {
                         askingPrice={n.property.askingPrice}
                         differenceInPercentage={n.differenceInPercentage}
                         note={n.note}
-                        onDeleteHandler={() => deletePriceSuggestionById(n.id)}
+                        onDeleteHandler={() => handleOnAlertDelete(n.id)}
                       />
                     ))}
                 </tbody>

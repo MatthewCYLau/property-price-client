@@ -32,3 +32,8 @@ export interface Alert {
   message: string
   severity: 'error' | 'info'
 }
+
+export enum ModalActionType {
+  SET_MODAL = 'set_modal',
+  REMOVE_MODAL = 'remove_modal'
+}

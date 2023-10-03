@@ -3,12 +3,18 @@ import { Actions as AuthActions } from './auth/actions'
 import { ActionType as AuthActionType } from './auth/action-types'
 import { Actions as AlertActions } from './alert/actions'
 import { ActionType as AlertActionType } from './alert/action-types'
-import { User, Alert } from '../types'
+import { User, Alert, ModalActionType } from '../types'
 
 export type AppState = {
   token: string | null
   isAuthenticated: boolean
   alerts: Alert[]
+  modal: {
+    showModal: boolean
+    message: string
+    onConfirm?: () => void
+    onCancel?: () => void
+  }
   user:
     | User
     | {
@@ -23,6 +29,10 @@ const initialState: AppState = {
   token: localStorage.getItem('token'),
   isAuthenticated: false,
   alerts: [],
+  modal: {
+    showModal: false,
+    message: ''
+  },
   user: {
     _id: '',
     email: '',
@@ -31,7 +41,20 @@ const initialState: AppState = {
   }
 }
 
-type Action = AuthActions | AlertActions
+type Action =
+  | {
+      type: ModalActionType.SET_MODAL
+      payload: {
+        message: string
+        onConfirm: () => void
+        onCancel: () => void
+      }
+    }
+  | {
+      type: ModalActionType.REMOVE_MODAL
+    }
+  | AuthActions
+  | AlertActions
 
 function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
@@ -65,6 +88,24 @@ function reducer(state: AppState, action: Action): AppState {
       return {
         ...state,
         alerts: state.alerts.filter((alert) => alert.id !== action.payload)
+      }
+    case ModalActionType.SET_MODAL:
+      return {
+        ...state,
+        modal: {
+          showModal: true,
+          message: action.payload.message,
+          onCancel: action.payload.onCancel,
+          onConfirm: action.payload.onConfirm
+        }
+      }
+    case ModalActionType.REMOVE_MODAL:
+      return {
+        ...state,
+        modal: {
+          showModal: false,
+          message: ''
+        }
       }
     default:
       return state
