@@ -18,7 +18,7 @@ export type AppState = {
   user:
     | User
     | {
-        _id: ''
+        id: ''
         email: ''
         name: ''
         avatarImageUrl: ''
@@ -34,7 +34,7 @@ const initialState: AppState = {
     message: ''
   },
   user: {
-    _id: '',
+    id: '',
     email: '',
     name: '',
     avatarImageUrl: ''
@@ -73,7 +73,7 @@ function reducer(state: AppState, action: Action): AppState {
         token: null,
         isAuthenticated: false,
         user: {
-          _id: '',
+          id: '',
           email: '',
           name: '',
           avatarImageUrl: ''

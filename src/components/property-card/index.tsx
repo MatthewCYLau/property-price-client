@@ -7,9 +7,18 @@ interface Props {
   listingUrl?: string
   price: number
   created: string
+  renderDeleteButton: boolean
+  deletePropertyHandler?: () => void
 }
 
-const PropertyCard: FC<Props> = ({ address, price, created, listingUrl }) => {
+const PropertyCard: FC<Props> = ({
+  address,
+  price,
+  created,
+  renderDeleteButton = false,
+  listingUrl,
+  deletePropertyHandler
+}) => {
   return (
     <div className="p-4 transition-shadow border rounded-lg shadow-sm hover:shadow-lg">
       <div className="flex items-start justify-between">
@@ -31,6 +40,13 @@ const PropertyCard: FC<Props> = ({ address, price, created, listingUrl }) => {
         <Link target="_blank" to={listingUrl}>
           <CtaButton copy="View property listing" type="button" />
         </Link>
+      )}
+      {deletePropertyHandler && renderDeleteButton && (
+        <CtaButton
+          copy="Delete property listing"
+          type="button"
+          onClickHandler={deletePropertyHandler}
+        />
       )}
     </div>
   )

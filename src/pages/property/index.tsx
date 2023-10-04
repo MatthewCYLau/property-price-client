@@ -1,11 +1,18 @@
-import { ReactElement, useState, useEffect, ChangeEvent } from 'react'
+import {
+  ReactElement,
+  useState,
+  useEffect,
+  ChangeEvent,
+  useContext
+} from 'react'
 import api from '../../utils/api'
+import { Store } from '../../store'
 import { useNavigate } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
 import { useParams } from 'react-router-dom'
 import Layout from '../../components/layout'
 import Loader from '../../components/loader'
-import { Property, PriceAnalysis } from '../../types'
+import { Property, PriceAnalysis, ModalActionType } from '../../types'
 import PropertyCard from '../../components/property-card'
 import CtaButton from '../../components/cta-button'
 import PriceAnalysisCard from '../../components/price-analysis-card'
@@ -16,6 +23,7 @@ interface Values {
 }
 
 const PropertyPage = (): ReactElement => {
+  const { dispatch, state } = useContext(Store)
   const { id } = useParams()
   const navigate = useNavigate()
   const [formValues, setFormValues] = useState<Values>({
@@ -27,7 +35,8 @@ const PropertyPage = (): ReactElement => {
     created: '',
     listingUrl: '',
     askingPrice: 0,
-    address: ''
+    address: '',
+    userId: ''
   })
 
   const [priceAnalysis, setPriceAnalysis] = useState<PriceAnalysis>({
@@ -62,6 +71,31 @@ const PropertyPage = (): ReactElement => {
     } catch (err) {
       console.log(err)
     }
+  }
+
+  const deletePropertyById = async (id: string) => {
+    try {
+      await api.delete(
+        `${import.meta.env.VITE_API_BASE_URL}/api/properties/${id}`
+      )
+      navigate('/dashboard')
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const handleOnPropertyDelete = (id: string) => {
+    dispatch({
+      type: ModalActionType.SET_MODAL,
+      payload: {
+        message: 'Do you want to delete property?',
+        onCancel: () => dispatch({ type: ModalActionType.REMOVE_MODAL }),
+        onConfirm: () => {
+          dispatch({ type: ModalActionType.REMOVE_MODAL })
+          deletePropertyById(id)
+        }
+      }
+    })
   }
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -123,6 +157,8 @@ const PropertyPage = (): ReactElement => {
               address={property.address}
               price={property.askingPrice}
               created={new Date(Date.parse(property.created)).toDateString()}
+              deletePropertyHandler={() => handleOnPropertyDelete(property.id)}
+              renderDeleteButton={property.userId === state.user.id}
             />
           </>
         )}

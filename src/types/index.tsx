@@ -13,6 +13,7 @@ export interface Property {
   listingUrl: string
   askingPrice: number
   address: string
+  userId: string
 }
 
 export interface PriceSuggestion {

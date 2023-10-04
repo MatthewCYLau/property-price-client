@@ -53,7 +53,7 @@ const DashboardPage = (): ReactElement => {
     }
   }
 
-  const handleOnAlertDelete = (id: string) => {
+  const handleOnPriceSuggestionDelete = (id: string) => {
     dispatch({
       type: ModalActionType.SET_MODAL,
       payload: {
@@ -87,6 +87,7 @@ const DashboardPage = (): ReactElement => {
                     address={n.address}
                     price={n.askingPrice}
                     created={new Date(Date.parse(n.created)).toDateString()}
+                    renderDeleteButton={false}
                   />
                 </Link>
               ))}
@@ -143,7 +144,9 @@ const DashboardPage = (): ReactElement => {
                         askingPrice={n.property.askingPrice}
                         differenceInPercentage={n.differenceInPercentage}
                         note={n.note}
-                        onDeleteHandler={() => handleOnAlertDelete(n.id)}
+                        onDeleteHandler={() =>
+                          handleOnPriceSuggestionDelete(n.id)
+                        }
                       />
                     ))}
                 </tbody>
