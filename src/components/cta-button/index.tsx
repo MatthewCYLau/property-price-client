@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import cn from 'classnames'
 
 type ButtonType = 'submit' | 'button'
 interface Props {
@@ -19,8 +20,14 @@ const CtaButton: FC<Props> = ({
       onClick={onClickHandler}
       disabled={disableSubmit}
       type={type}
-      className="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white rounded-lg
-              px-4 py-3 mt-6"
+      className={cn(
+        'w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white rounded-lg px-4 py-3 mt-6',
+        {
+          'bg-red-400 hover:bg-red-300 focus:bg-red-300': copy
+            .toLowerCase()
+            .includes('delete')
+        }
+      )}
     >
       {copy}
     </button>
