@@ -10,7 +10,7 @@ import PropertyCard from '../../components/property-card'
 import TableRow from '../../components/table-row'
 
 const DashboardPage = (): ReactElement => {
-  const { dispatch } = useContext(Store)
+  const { dispatch, state } = useContext(Store)
   const [properties, setProperties] = useState<Property[]>([])
   const [priceSuggestions, setPriceSuggestions] = useState<PriceSuggestion[]>(
     []
@@ -147,6 +147,7 @@ const DashboardPage = (): ReactElement => {
                         onDeleteHandler={() =>
                           handleOnPriceSuggestionDelete(n.id)
                         }
+                        renderDeleteButton={n.userId === state.user.id}
                       />
                     ))}
                 </tbody>

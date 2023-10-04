@@ -8,6 +8,7 @@ interface Props {
   askingPrice: number
   differenceInPercentage: number
   note: string
+  renderDeleteButton: boolean
   onDeleteHandler: () => void
 }
 
@@ -16,6 +17,7 @@ const TableRow: FC<Props> = ({
   askingPrice,
   differenceInPercentage,
   note,
+  renderDeleteButton = false,
   onDeleteHandler
 }) => {
   return (
@@ -41,9 +43,11 @@ const TableRow: FC<Props> = ({
         <div className="text-sm font-medium text-gray-900">{note}</div>
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
-        <button onClick={onDeleteHandler} className="hover:text-white">
-          <DeleteIcon />
-        </button>
+        {renderDeleteButton && (
+          <button onClick={onDeleteHandler} className="hover:text-white">
+            <DeleteIcon />
+          </button>
+        )}
       </td>
     </tr>
   )

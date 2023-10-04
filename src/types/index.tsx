@@ -21,6 +21,7 @@ export interface PriceSuggestion {
   differenceInPercentage: number
   note: string
   property: Property
+  userId: string
 }
 
 export interface PriceAnalysis {
