@@ -7,12 +7,14 @@ import {
 } from 'react'
 import api from '../../utils/api'
 import { Store } from '../../store'
+import { v4 as uuid } from 'uuid'
 import { useNavigate } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
 import { useParams } from 'react-router-dom'
 import Layout from '../../components/layout'
 import Loader from '../../components/loader'
 import { Property, PriceAnalysis, ModalActionType } from '../../types'
+import { ActionType as AlertActionType } from '../../store/alert/action-types'
 import PropertyCard from '../../components/property-card'
 import CtaButton from '../../components/cta-button'
 import PriceAnalysisCard from '../../components/price-analysis-card'
@@ -119,8 +121,12 @@ const PropertyPage = (): ReactElement => {
         }
       )
       navigate('/dashboard')
-    } catch (err) {
-      console.log(err)
+    } catch (err: any) {
+      const error: Error = err.response.data
+      dispatch({
+        type: AlertActionType.SET_ALERT,
+        payload: { id: uuid(), message: error.message, severity: 'error' }
+      })
     }
   }
 
