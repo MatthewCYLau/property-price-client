@@ -36,7 +36,11 @@ const PropertyCard: FC<Props> = ({
             {`£${price.toLocaleString()}`}
           </span>
         </div>
-        <div className="p-10 bg-gray-200 rounded-md"></div>
+        <img
+          className="w-1/4 h-1/4"
+          src={`/house-${Math.floor(Math.random() * 3) + 1}.png`}
+          alt="house"
+        />
       </div>
       <div>
         {isNewProperty(created) && (
