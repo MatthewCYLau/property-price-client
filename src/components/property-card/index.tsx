@@ -11,6 +11,14 @@ interface Props {
   deletePropertyHandler?: () => void
 }
 
+const isNewProperty = (created: string) => {
+  const current = new Date()
+  const propertyCreatedDate = new Date(Date.parse(created))
+  const duration = current.valueOf() - propertyCreatedDate.valueOf()
+  const hours = Math.floor(duration / (60 * 60 * 1000))
+  return hours < 24
+}
+
 const PropertyCard: FC<Props> = ({
   address,
   price,
@@ -31,9 +39,11 @@ const PropertyCard: FC<Props> = ({
         <div className="p-10 bg-gray-200 rounded-md"></div>
       </div>
       <div>
-        <span className="inline-block px-2 text-sm text-white bg-green-300 rounded">
-          New!
-        </span>
+        {isNewProperty(created) && (
+          <span className="inline-block px-2 text-sm text-white bg-green-300 rounded mr-2">
+            New!
+          </span>
+        )}
         <span>{created}</span>
       </div>
       {listingUrl && (
