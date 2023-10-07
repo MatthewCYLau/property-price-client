@@ -8,6 +8,7 @@ import PropertyPage from '../pages/property'
 import { useContext } from 'react'
 import { Store } from '../store'
 import AddPropertyPage from '../pages/add-property'
+import UpdateUserPage from '../pages/update-user'
 
 type PrivateRouteProps = {
   component: React.ComponentType<any>
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
   {
     path: '/add-property',
     element: <PrivateRoute component={AddPropertyPage} />
+  },
+  {
+    path: '/update-user',
+    element: <PrivateRoute component={UpdateUserPage} />
   },
   {
     path: '/properties/:id',

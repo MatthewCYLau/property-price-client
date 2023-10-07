@@ -7,8 +7,9 @@ import GithubIcon from '../../components/icons/github-icon'
 const getHeader = (path: string): string => {
   if (path.includes('add-property')) {
     return 'Add Property'
+  } else if (path.includes('update-user')) {
+    return 'Update User'
   }
-
   return 'Dashboard'
 }
 

@@ -3,7 +3,8 @@ import { Store } from '../../store'
 import { ActionType as AuthActionType } from '../../store/auth/action-types'
 import LogoutIcon from '../icons/logout-icon'
 import HomeIcon from '../icons/home-icon'
-import DocumentIcon from '../document-icon'
+import DocumentIcon from '../icons/document-icon'
+import CogwheelIcon from '../icons/cogwheel-icon'
 import SideNavButton from '../side-nav-button'
 
 const sideNavButtons: {
@@ -16,6 +17,11 @@ const sideNavButtons: {
     toUrl: '/add-property',
     iconComponent: <DocumentIcon />,
     copy: 'Add Property'
+  },
+  {
+    toUrl: '/update-user',
+    iconComponent: <CogwheelIcon />,
+    copy: 'Update User'
   }
 ]
 
