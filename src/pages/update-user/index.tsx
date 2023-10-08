@@ -23,6 +23,12 @@ const userTypes: readonly UserType[] = [
 
 const UpdateUserPage = (): ReactElement => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false)
+  const [userType, setUserType] = useState<UserType>(UserType.RENTER)
+
+  const dropdownItemOnClickHandler = (n: UserType) => {
+    setUserType(n)
+    setShowDropdown(!showDropdown)
+  }
 
   return (
     <Layout>
@@ -30,18 +36,18 @@ const UpdateUserPage = (): ReactElement => {
         <form
           onSubmit={(e) => {
             e.preventDefault()
-            console.log('submit')
+            console.log(userType)
           }}
         >
           <div className="mb-6">
-            <label className="block text-gray-700">Update position</label>
+            <label className="block text-gray-700">User type</label>
           </div>
           <div className="relative group">
             <button
               onClick={() => setShowDropdown(!showDropdown)}
               className="inline-flex justify-center w-full px-2 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500"
             >
-              <span className="mr-2">Select position</span>
+              <span className="mr-2">{userTypeButtonCopies[userType]}</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-5 h-5 ml-2 -mr-1"
@@ -69,7 +75,8 @@ const UpdateUserPage = (): ReactElement => {
                 />
                 {userTypes.map((n) => (
                   <button
-                    key={n.valueOf()}
+                    key={n}
+                    onClick={() => dropdownItemOnClickHandler(n)}
                     className="w-full block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md"
                   >
                     {userTypeButtonCopies[n]}
