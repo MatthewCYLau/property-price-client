@@ -1,6 +1,25 @@
 import { ReactElement, useState } from 'react'
 import Layout from '../../components/layout'
+import { UserType } from '../../types'
 import CtaButton from '../../components/cta-button'
+
+type UserTypeMap = {
+  [name in UserType]: string
+}
+
+const userTypeButtonCopies: UserTypeMap = {
+  FirstTimeBuyer: 'First time buyer',
+  HomeOwner: 'Home owner',
+  Landlord: 'Landlord',
+  Renter: 'Renter'
+}
+
+const userTypes: readonly UserType[] = [
+  UserType.FIRST_TIME_BUYER,
+  UserType.HOME_OWNER,
+  UserType.LANDLORD,
+  UserType.RENTER
+]
 
 const UpdateUserPage = (): ReactElement => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false)
@@ -48,9 +67,14 @@ const UpdateUserPage = (): ReactElement => {
                   type="text"
                   placeholder="Search items"
                 />
-                <button className="w-full block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md">
-                  Renter
-                </button>
+                {userTypes.map((n) => (
+                  <button
+                    key={n.valueOf()}
+                    className="w-full block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md"
+                  >
+                    {userTypeButtonCopies[n]}
+                  </button>
+                ))}
               </div>
             )}
           </div>

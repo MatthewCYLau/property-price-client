@@ -39,3 +39,10 @@ export enum ModalActionType {
   SET_MODAL = 'set_modal',
   REMOVE_MODAL = 'remove_modal'
 }
+
+export enum UserType {
+  RENTER = 'Renter',
+  FIRST_TIME_BUYER = 'FirstTimeBuyer',
+  HOME_OWNER = 'HomeOwner',
+  LANDLORD = 'Landlord'
+}
