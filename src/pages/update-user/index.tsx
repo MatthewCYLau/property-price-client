@@ -1,9 +1,12 @@
-import { ReactElement, useState, useContext } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { ReactElement, useState, useContext, ChangeEvent } from 'react'
+import api from '../../utils/api'
+import { v4 as uuid } from 'uuid'
+import { useNavigate } from 'react-router-dom'
 import { Store } from '../../store'
 import Layout from '../../components/layout'
 import { UserType } from '../../types'
 import CtaButton from '../../components/cta-button'
+import { ActionType as AlertActionType } from '../../store/alert/action-types'
 
 interface Values {
   email: string
@@ -32,13 +35,16 @@ const userTypes: readonly UserType[] = [
 const UpdateUserPage = (): ReactElement => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false)
   const { dispatch, state } = useContext(Store)
-  const { id } = useParams()
   const navigate = useNavigate()
   const [formValues, setFormValues] = useState<Values>({
     email: '',
     password: '',
     userType: UserType.RENTER
   })
+
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFormValues({ ...formValues, [e.target.name]: e.target.value })
+  }
 
   const dropdownItemOnClickHandler = (n: UserType) => {
     setFormValues((prevState) => ({
@@ -48,15 +54,48 @@ const UpdateUserPage = (): ReactElement => {
     setShowDropdown(!showDropdown)
   }
 
+  const submitHandler = async (e: React.SyntheticEvent) => {
+    e.preventDefault()
+    try {
+      await api.patch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/users/${state.user.id}`,
+        {
+          ...formValues,
+          email: state.user.email
+        },
+        {
+          headers: {
+            'content-type': 'application/json'
+          }
+        }
+      )
+      navigate('/dashboard')
+    } catch (err: any) {
+      const error: Error = err.response.data
+      dispatch({
+        type: AlertActionType.SET_ALERT,
+        payload: { id: uuid(), message: error.message, severity: 'error' }
+      })
+    }
+  }
+
   return (
     <Layout>
       <div className="grid grid-cols-1 gap-5 mt-6 sm:grid-cols-2 lg:grid-cols-3">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault()
-            console.log(formValues.userType)
-          }}
-        >
+        <form onSubmit={submitHandler}>
+          <div className="mb-6">
+            <label className="block text-gray-700">Password</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Enter Password"
+              className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
+                focus:bg-white focus:outline-none"
+              value={formValues.password}
+              onChange={(e) => onChange(e)}
+            />
+          </div>
           <div className="mb-6">
             <label className="block text-gray-700">User type</label>
           </div>
