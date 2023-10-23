@@ -7,6 +7,12 @@ export interface User {
   name: string
 }
 
+export interface PaginationMeta {
+  totalRecords: number
+  currentPage: number
+  totalPages: number
+}
+
 export interface Property {
   id: string
   created: string
@@ -22,6 +28,11 @@ export interface PriceSuggestion {
   note: string
   property: Property
   userId: string
+}
+
+export interface PriceSuggestionsResponse {
+  paginationMetadata: PaginationMeta
+  priceSuggestions: PriceSuggestion[]
 }
 
 export interface PriceAnalysis {

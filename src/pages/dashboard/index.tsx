@@ -5,18 +5,25 @@ import api from '../../utils/api'
 import { AxiosResponse } from 'axios'
 import Layout from '../../components/layout'
 import Loader from '../../components/loader'
-import { Property, PriceSuggestion, ModalActionType } from '../../types'
+import {
+  Property,
+  PriceSuggestion,
+  ModalActionType,
+  PriceSuggestionsResponse
+} from '../../types'
 import PropertyCard from '../../components/property-card'
 import TableRow from '../../components/table-row'
 
 const DashboardPage = (): ReactElement => {
   const { dispatch, state } = useContext(Store)
   const [properties, setProperties] = useState<Property[]>([])
+  const [currentPage, setCurrentPage] = useState<number>(1)
   const [priceSuggestions, setPriceSuggestions] = useState<PriceSuggestion[]>(
     []
   )
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const pageSize: number = 10
 
   const getProperties = async () => {
     try {
@@ -33,10 +40,12 @@ const DashboardPage = (): ReactElement => {
 
   const getPriceSuggestions = async () => {
     try {
-      const { data }: AxiosResponse<PriceSuggestion[]> = await api.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/price-suggestions`
+      const { data }: AxiosResponse<PriceSuggestionsResponse> = await api.get(
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/price-suggestions/?page=${currentPage}&pageSize=${pageSize}`
       )
-      setPriceSuggestions(data)
+      setPriceSuggestions(data.priceSuggestions)
     } catch (err) {
       console.log(err)
     }
