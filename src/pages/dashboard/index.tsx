@@ -18,6 +18,7 @@ const DashboardPage = (): ReactElement => {
   const { dispatch, state } = useContext(Store)
   const [properties, setProperties] = useState<Property[]>([])
   const [currentPage, setCurrentPage] = useState<number>(1)
+  const [pageCount, setPageCount] = useState<number>(1)
   const [priceSuggestions, setPriceSuggestions] = useState<PriceSuggestion[]>(
     []
   )
@@ -161,6 +162,11 @@ const DashboardPage = (): ReactElement => {
                     ))}
                 </tbody>
               </table>
+            </div>
+            <div className="flex justify-center items-center space-x-4 mt-4">
+              <div className="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm">{`<`}</div>
+              <div className="text-slate-500">{`${currentPage} / ${pageCount}`}</div>
+              <div className="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm">{`>`}</div>
             </div>
           </div>
         </div>
