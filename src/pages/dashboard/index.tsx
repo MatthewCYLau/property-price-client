@@ -47,6 +47,7 @@ const DashboardPage = (): ReactElement => {
         }/api/price-suggestions/?page=${currentPage}&pageSize=${pageSize}`
       )
       setPriceSuggestions(data.priceSuggestions)
+      setPageCount(data.paginationMetadata.totalPages)
     } catch (err) {
       console.log(err)
     }
