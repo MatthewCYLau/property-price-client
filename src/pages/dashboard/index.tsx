@@ -78,10 +78,17 @@ const DashboardPage = (): ReactElement => {
     })
   }
 
+  const handleOnNextPageClick = () => setCurrentPage(currentPage + 1)
+  const handleOnPreviousPageClick = () => setCurrentPage(currentPage - 1)
+
   useEffect(() => {
     getProperties()
     getPriceSuggestions()
   }, [])
+
+  useEffect(() => {
+    getPriceSuggestions()
+  }, [currentPage])
 
   return (
     <Layout>
@@ -166,9 +173,17 @@ const DashboardPage = (): ReactElement => {
               </table>
             </div>
             <div className="flex justify-center items-center space-x-4 mt-4">
-              <div className="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm">{`<`}</div>
+              <button
+                disabled={currentPage === 1}
+                onClick={handleOnPreviousPageClick}
+                className="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm"
+              >{`<`}</button>
               <div className="text-slate-500">{`${currentPage} / ${pageCount}`}</div>
-              <div className="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm">{`>`}</div>
+              <button
+                disabled={currentPage === pageCount}
+                onClick={handleOnNextPageClick}
+                className="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm"
+              >{`>`}</button>
             </div>
           </div>
         </div>
