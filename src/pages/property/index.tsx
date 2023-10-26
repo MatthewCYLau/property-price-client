@@ -37,7 +37,8 @@ const PropertyPage = (): ReactElement => {
     listingUrl: '',
     askingPrice: 0,
     address: '',
-    userId: ''
+    userId: '',
+    avatarId: 1
   })
 
   const [priceAnalysis, setPriceAnalysis] = useState<PriceAnalysis>({
@@ -164,6 +165,7 @@ const PropertyPage = (): ReactElement => {
               created={new Date(Date.parse(property.created)).toDateString()}
               deletePropertyHandler={() => handleOnPropertyDelete(property.id)}
               renderDeleteButton={property.userId === state.user.id}
+              avatarId={property.avatarId}
             />
           </>
         )}

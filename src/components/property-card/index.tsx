@@ -9,6 +9,7 @@ interface Props {
   created: string
   renderDeleteButton: boolean
   deletePropertyHandler?: () => void
+  avatarId: number
 }
 
 const isNewProperty = (created: string) => {
@@ -25,7 +26,8 @@ const PropertyCard: FC<Props> = ({
   created,
   renderDeleteButton = false,
   listingUrl,
-  deletePropertyHandler
+  deletePropertyHandler,
+  avatarId
 }) => {
   return (
     <div className="p-4 transition-shadow border rounded-lg shadow-sm hover:shadow-lg">
@@ -38,7 +40,7 @@ const PropertyCard: FC<Props> = ({
         </div>
         <img
           className="w-1/4 h-1/4"
-          src={`/house-${Math.floor(Math.random() * 3) + 1}.png`}
+          src={`/house-${avatarId.toString()}.png`}
           alt="house"
         />
       </div>

@@ -99,6 +99,7 @@ const DashboardPage = (): ReactElement => {
                     price={n.askingPrice}
                     created={new Date(Date.parse(n.created)).toDateString()}
                     renderDeleteButton={false}
+                    avatarId={n.avatarId}
                   />
                 </Link>
               ))}
