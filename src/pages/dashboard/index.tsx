@@ -176,13 +176,13 @@ const DashboardPage = (): ReactElement => {
               <button
                 disabled={currentPage === 1}
                 onClick={handleOnPreviousPageClick}
-                className="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm"
+                className="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm disabled:cursor-default disabled:text-slate-500 disabled:bg-gray-100"
               >{`<`}</button>
               <div className="text-slate-500">{`${currentPage} / ${pageCount}`}</div>
               <button
                 disabled={currentPage === pageCount}
                 onClick={handleOnNextPageClick}
-                className="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm"
+                className="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm disabled:cursor-default disabled:text-slate-500 disabled:bg-gray-100"
               >{`>`}</button>
             </div>
           </div>
