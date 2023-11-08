@@ -1,8 +1,9 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import GithubIcon from '../../components/icons/github-icon'
 import { NotificationIcon } from '../icons/notification-icon'
+import NotificationDropdown from '../notification-dropdown'
 
 const getHeader = (path: string): string => {
   if (path.includes('add-property')) {
@@ -15,13 +16,20 @@ const getHeader = (path: string): string => {
 
 const TopNav: FC = () => {
   const location = useLocation()
+  const [showDropdown, setShowDropdown] = useState<boolean>(false)
+
+  const handleNotificationIconOnClick = () => setShowDropdown(!showDropdown)
   return (
     <div className="flex flex-col items-start justify-between pb-6 space-y-4 border-b lg:items-center lg:space-y-0 lg:flex-row">
       <h1 className="text-2xl font-semibold whitespace-nowrap">
         {getHeader(location.pathname)}
       </h1>
-      <div className="flex">
-        <NotificationIcon />
+      <div className="flex relative">
+        {showDropdown && <NotificationDropdown />}
+        <NotificationIcon
+          count={2}
+          onClickHandler={handleNotificationIconOnClick}
+        />
         <div className="space-y-6 md:space-x-2 md:space-y-0 ml-2">
           <Link
             to="https://github.com/MatthewCYLau/property-price-client"
