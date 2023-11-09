@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useState, useRef, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import GithubIcon from '../../components/icons/github-icon'
@@ -17,6 +17,17 @@ const getHeader = (path: string): string => {
 const TopNav: FC = () => {
   const location = useLocation()
   const [showDropdown, setShowDropdown] = useState<boolean>(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent): void => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setShowDropdown(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  })
 
   const handleNotificationIconOnClick = () => setShowDropdown(!showDropdown)
   return (
@@ -25,7 +36,11 @@ const TopNav: FC = () => {
         {getHeader(location.pathname)}
       </h1>
       <div className="flex relative">
-        {showDropdown && <NotificationDropdown />}
+        {showDropdown && (
+          <div ref={ref}>
+            <NotificationDropdown />
+          </div>
+        )}
         <NotificationIcon
           count={2}
           onClickHandler={handleNotificationIconOnClick}
