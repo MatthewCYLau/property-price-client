@@ -1,4 +1,6 @@
 import { FC } from 'react'
+import cn from 'classnames'
+
 interface Props {
   count: number
   onClickHandler: () => void
@@ -8,7 +10,13 @@ export const NotificationIcon: FC<Props> = ({ count = 2, onClickHandler }) => {
   return (
     <button onClick={onClickHandler} className="relative">
       <div className="absolute left-0 top-0 bg-red-500 rounded-full">
-        <span className="text-sm text-white p-2">{count}</span>
+        <span
+          className={cn('text-sm text-white p-1', {
+            'p-2': count < 10
+          })}
+        >
+          {count}
+        </span>
       </div>
       <div className="p-2">
         <svg
