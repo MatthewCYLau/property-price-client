@@ -9,15 +9,17 @@ interface Props {
 export const NotificationIcon: FC<Props> = ({ count = 2, onClickHandler }) => {
   return (
     <button onClick={onClickHandler} className="relative">
-      <div className="absolute left-0 top-0 bg-red-500 rounded-full">
-        <span
-          className={cn('text-sm text-white p-1', {
-            'p-2': count < 10
-          })}
-        >
-          {count}
-        </span>
-      </div>
+      {count > 0 && (
+        <div className="absolute left-0 top-0 bg-red-500 rounded-full">
+          <span
+            className={cn('text-sm text-white p-1', {
+              'p-2': count < 10
+            })}
+          >
+            {count}
+          </span>
+        </div>
+      )}
       <div className="p-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"

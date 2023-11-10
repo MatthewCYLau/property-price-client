@@ -52,6 +52,14 @@ export enum ModalActionType {
   REMOVE_MODAL = 'remove_modal'
 }
 
+export interface Notification {
+  id: string
+  readStatus: boolean
+  priceSuggestionId: string
+  actorId: string
+  notifierId: string
+}
+
 export enum UserType {
   RENTER = 'Renter',
   FIRST_TIME_BUYER = 'FirstTimeBuyer',
