@@ -99,7 +99,7 @@ const DashboardPage = (): ReactElement => {
           <>
             {!!properties.length &&
               properties.map((n) => (
-                <Link to={`/properties/${n.id}`}>
+                <Link key={n.id} to={`/properties/${n.id}`}>
                   <PropertyCard
                     key={n.id}
                     address={n.address}
