@@ -58,6 +58,7 @@ export interface Notification {
   priceSuggestionId: string
   actorId: string
   notifierId: string
+  notificationType: NotificationType
 }
 
 export enum UserType {
@@ -65,4 +66,10 @@ export enum UserType {
   FIRST_TIME_BUYER = 'FirstTimeBuyer',
   HOME_OWNER = 'HomeOwner',
   LANDLORD = 'Landlord'
+}
+
+export enum NotificationType {
+  ABOVE_ASKING = 'AboveAsking',
+  BELOW_ASKING = 'BelowAsking',
+  ASKING = 'Asking'
 }

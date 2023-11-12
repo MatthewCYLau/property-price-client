@@ -2,7 +2,7 @@ import { FC, useState, useRef, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import GithubIcon from '../../components/icons/github-icon'
-import { Notification } from '../../types'
+import { Notification, NotificationType } from '../../types'
 import { NotificationIcon } from '../icons/notification-icon'
 import NotificationDropdown from '../notification-dropdown'
 
@@ -24,7 +24,8 @@ const TopNav: FC = () => {
       readStatus: false,
       priceSuggestionId: '',
       actorId: '',
-      notifierId: ''
+      notifierId: '',
+      notificationType: NotificationType.ASKING
     }
   ])
   const ref = useRef<HTMLDivElement>(null)
