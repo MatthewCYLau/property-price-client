@@ -1,8 +1,8 @@
-import { FC, useState, useRef, useEffect } from 'react'
+import { FC, useState, useRef, useEffect, useContext } from 'react'
+import { Store } from '../../store'
 import { useLocation } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import GithubIcon from '../../components/icons/github-icon'
-import { Notification, NotificationType } from '../../types'
 import { NotificationIcon } from '../icons/notification-icon'
 import NotificationDropdown from '../notification-dropdown'
 
@@ -17,17 +17,8 @@ const getHeader = (path: string): string => {
 
 const TopNav: FC = () => {
   const location = useLocation()
+  const { state } = useContext(Store)
   const [showDropdown, setShowDropdown] = useState<boolean>(false)
-  const [notifications, setNotifications] = useState<Notification[]>([
-    {
-      id: '',
-      readStatus: false,
-      priceSuggestionId: '',
-      actorId: '',
-      notifierId: '',
-      notificationType: NotificationType.ASKING
-    }
-  ])
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -41,7 +32,7 @@ const TopNav: FC = () => {
   })
 
   const handleNotificationIconOnClick = () => {
-    if (notifications.length === 0) {
+    if (state.notifications.length === 0) {
       return
     }
     setShowDropdown(!showDropdown)
@@ -58,7 +49,7 @@ const TopNav: FC = () => {
           </div>
         )}
         <NotificationIcon
-          count={notifications.length}
+          count={state.notifications.length}
           onClickHandler={handleNotificationIconOnClick}
         />
         <div className="space-y-6 md:space-x-2 md:space-y-0 ml-2">

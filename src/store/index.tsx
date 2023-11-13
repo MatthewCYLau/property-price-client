@@ -3,12 +3,15 @@ import { Actions as AuthActions } from './auth/actions'
 import { ActionType as AuthActionType } from './auth/action-types'
 import { Actions as AlertActions } from './alert/actions'
 import { ActionType as AlertActionType } from './alert/action-types'
-import { User, Alert, ModalActionType } from '../types'
+import { Actions as NotificationActions } from './notification/actions'
+import { ActionType as NotificationActionType } from './notification/action-types'
+import { User, Alert, ModalActionType, Notification } from '../types'
 
 export type AppState = {
   token: string | null
   isAuthenticated: boolean
   alerts: Alert[]
+  notifications: Notification[]
   modal: {
     showModal: boolean
     message: string
@@ -29,6 +32,7 @@ const initialState: AppState = {
   token: localStorage.getItem('token'),
   isAuthenticated: false,
   alerts: [],
+  notifications: [],
   modal: {
     showModal: false,
     message: ''
@@ -55,6 +59,7 @@ type Action =
     }
   | AuthActions
   | AlertActions
+  | NotificationActions
 
 function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
@@ -106,6 +111,11 @@ function reducer(state: AppState, action: Action): AppState {
           showModal: false,
           message: ''
         }
+      }
+    case NotificationActionType.LOAD_NOTIFICATIONS_SUCCESS:
+      return {
+        ...state,
+        notifications: action.payload
       }
     default:
       return state
