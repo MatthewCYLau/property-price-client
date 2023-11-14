@@ -43,9 +43,9 @@ const TopNav: FC = () => {
         {getHeader(location.pathname)}
       </h1>
       <div className="flex relative">
-        {showDropdown && (
+        {showDropdown && state.notifications.length !== 0 && (
           <div ref={ref}>
-            <NotificationDropdown />
+            <NotificationDropdown notifications={state.notifications} />
           </div>
         )}
         <NotificationIcon

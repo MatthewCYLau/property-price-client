@@ -6,4 +6,9 @@ interface LoadNotificationsSuccessAction {
   payload: Notification[]
 }
 
-export type Actions = LoadNotificationsSuccessAction
+interface RemoveNotificationAction {
+  type: ActionType.REMOVE_NOTIFICATION
+  payload: string
+}
+
+export type Actions = LoadNotificationsSuccessAction | RemoveNotificationAction

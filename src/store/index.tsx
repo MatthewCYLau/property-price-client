@@ -117,6 +117,14 @@ function reducer(state: AppState, action: Action): AppState {
         ...state,
         notifications: action.payload
       }
+
+    case NotificationActionType.REMOVE_NOTIFICATION:
+      return {
+        ...state,
+        notifications: state.notifications.filter(
+          (notification) => notification.id !== action.payload
+        )
+      }
     default:
       return state
   }
