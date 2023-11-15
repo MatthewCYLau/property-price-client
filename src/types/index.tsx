@@ -73,3 +73,11 @@ export enum NotificationType {
   BELOW_ASKING = 'BelowAsking',
   ASKING = 'Asking'
 }
+
+type NotificationCopyMap<T> = { [notification in NotificationType]: T }
+
+export const notificationCopyMap: NotificationCopyMap<string> = {
+  AboveAsking: 'above asking',
+  BelowAsking: ' below asking',
+  Asking: 'asking'
+}
