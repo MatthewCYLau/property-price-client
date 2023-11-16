@@ -1,4 +1,5 @@
 import { useContext, FC } from 'react'
+import api from '../../utils/api'
 import { ActionType as NotificationActionType } from '../../store/notification/action-types'
 import {
   Notification,
@@ -14,11 +15,26 @@ interface Props {
 
 const NotificationDropdown: FC<Props> = ({ notifications }) => {
   const { dispatch } = useContext(Store)
-  const onClickHandler = (id: string) => {
-    dispatch({
-      type: NotificationActionType.REMOVE_NOTIFICATION,
-      payload: id
-    })
+  const onClickHandler = async (id: string) => {
+    try {
+      await api.patch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/notifications/${id}`,
+        {
+          readStatus: true
+        },
+        {
+          headers: {
+            'content-type': 'application/json'
+          }
+        }
+      )
+      dispatch({
+        type: NotificationActionType.REMOVE_NOTIFICATION,
+        payload: id
+      })
+    } catch (err: any) {
+      console.log(err)
+    }
   }
 
   const generateCopy = (notificationType: NotificationType): string => {
