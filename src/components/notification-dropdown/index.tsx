@@ -15,7 +15,7 @@ interface Props {
 
 const NotificationDropdown: FC<Props> = ({ notifications }) => {
   const { dispatch } = useContext(Store)
-  const onClickHandler = async (id: string) => {
+  const updateNotificationAsRead = async (id: string) => {
     try {
       await api.patch(
         `${import.meta.env.VITE_API_BASE_URL}/api/notifications/${id}`,
@@ -46,7 +46,7 @@ const NotificationDropdown: FC<Props> = ({ notifications }) => {
         <NotificationDropdownItem
           key={n.id}
           copy={generateCopy(n.notificationType)}
-          onClickHandler={() => onClickHandler(n.id)}
+          onClickHandler={() => updateNotificationAsRead(n.id)}
         />
       ))}
     </div>
