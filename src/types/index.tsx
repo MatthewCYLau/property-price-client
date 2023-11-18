@@ -56,6 +56,7 @@ export interface Notification {
   id: string
   readStatus: boolean
   priceSuggestionId: string
+  propertyId: string
   actorId: string
   notifierId: string
   notificationType: NotificationType

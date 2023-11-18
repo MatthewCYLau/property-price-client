@@ -4,12 +4,17 @@ import { Link } from 'react-router-dom'
 interface Props {
   copy: string
   onClickHandler: () => void
+  propertyId: string
 }
 
-const NotificationDropdownItem: FC<Props> = ({ copy, onClickHandler }) => {
+const NotificationDropdownItem: FC<Props> = ({
+  copy,
+  onClickHandler,
+  propertyId
+}) => {
   return (
     <div className="py-2 p-2 flex w-72 hover:bg-gray-100 active:bg-blue-100">
-      <Link to={`/properties/653a828ee5617fe138fd9ee3`}>
+      <Link to={`/properties/${propertyId}`}>
         <span className="flex block rounded-md pl-2 py-2 text-sm text-gray-700">
           {copy}
         </span>

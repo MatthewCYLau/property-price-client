@@ -47,6 +47,7 @@ const NotificationDropdown: FC<Props> = ({ notifications }) => {
           key={n.id}
           copy={generateCopy(n.notificationType)}
           onClickHandler={() => updateNotificationAsRead(n.id)}
+          propertyId={n.propertyId}
         />
       ))}
     </div>
