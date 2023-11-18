@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { Link } from 'react-router-dom'
 
 interface Props {
   copy: string
@@ -8,9 +9,11 @@ interface Props {
 const NotificationDropdownItem: FC<Props> = ({ copy, onClickHandler }) => {
   return (
     <div className="py-2 p-2 flex w-72 hover:bg-gray-100 active:bg-blue-100">
-      <span className="flex block rounded-md pl-2 py-2 text-sm text-gray-700">
-        {copy}
-      </span>
+      <Link to={`/properties/653a828ee5617fe138fd9ee3`}>
+        <span className="flex block rounded-md pl-2 py-2 text-sm text-gray-700">
+          {copy}
+        </span>
+      </Link>
       <button onClick={onClickHandler}>
         <svg
           className="h-6 w-6 cursor-pointer"
