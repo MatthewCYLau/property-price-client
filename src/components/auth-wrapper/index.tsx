@@ -38,7 +38,9 @@ const AuthWrapper = ({ children }: AuthWrapperProps): ReactElement => {
   const getCurrentUserNotifications = async () => {
     try {
       const { data }: AxiosResponse<Notification[]> = await api.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/notifications/me`
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/notifications/me?readStatus=false`
       )
       dispatch({
         type: NotificationctionType.LOAD_NOTIFICATIONS_SUCCESS,

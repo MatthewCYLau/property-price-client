@@ -20,7 +20,7 @@ const NotificationDropdown: FC<Props> = ({ notifications }) => {
       await api.patch(
         `${import.meta.env.VITE_API_BASE_URL}/api/notifications/${id}`,
         {
-          readStatus: false
+          readStatus: true
         },
         {
           headers: {
