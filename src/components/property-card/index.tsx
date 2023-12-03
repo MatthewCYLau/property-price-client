@@ -7,8 +7,9 @@ interface Props {
   listingUrl?: string
   price: number
   created: string
-  renderDeleteButton: boolean
+  currentUserIsPropertyCreator?: boolean
   deletePropertyHandler?: () => void
+  updatePropertyHandler?: () => void
   avatarId: number
 }
 
@@ -24,9 +25,10 @@ const PropertyCard: FC<Props> = ({
   address,
   price,
   created,
-  renderDeleteButton = false,
+  currentUserIsPropertyCreator = false,
   listingUrl,
   deletePropertyHandler,
+  updatePropertyHandler,
   avatarId
 }) => {
   return (
@@ -57,7 +59,14 @@ const PropertyCard: FC<Props> = ({
           <CtaButton copy="View property listing" type="button" />
         </Link>
       )}
-      {deletePropertyHandler && renderDeleteButton && (
+      {updatePropertyHandler && currentUserIsPropertyCreator && (
+        <CtaButton
+          copy="Update property listing"
+          type="button"
+          onClickHandler={updatePropertyHandler}
+        />
+      )}
+      {deletePropertyHandler && currentUserIsPropertyCreator && (
         <CtaButton
           copy="Delete property listing"
           type="button"

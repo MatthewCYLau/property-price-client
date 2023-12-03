@@ -100,6 +100,10 @@ const PropertyPage = (): ReactElement => {
     })
   }
 
+  const handleOnPropertyUpdate = (id: string) => {
+    console.log(`Updating property with ${id}...`)
+  }
+
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value })
   }
@@ -164,7 +168,8 @@ const PropertyPage = (): ReactElement => {
               price={property.askingPrice}
               created={new Date(Date.parse(property.created)).toDateString()}
               deletePropertyHandler={() => handleOnPropertyDelete(property.id)}
-              renderDeleteButton={property.userId === state.user.id}
+              updatePropertyHandler={() => handleOnPropertyUpdate(property.id)}
+              currentUserIsPropertyCreator={property.userId === state.user.id}
               avatarId={property.avatarId}
             />
           </>

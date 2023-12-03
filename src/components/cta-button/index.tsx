@@ -26,6 +26,11 @@ const CtaButton: FC<Props> = ({
           'bg-red-400 hover:bg-red-300 focus:bg-red-300': copy
             .toLowerCase()
             .includes('delete')
+        },
+        {
+          'bg-amber-400 hover:bg-amber-300 focus:bg-amber-300': copy
+            .toLowerCase()
+            .includes('update')
         }
       )}
     >
