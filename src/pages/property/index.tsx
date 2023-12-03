@@ -101,7 +101,7 @@ const PropertyPage = (): ReactElement => {
   }
 
   const handleOnPropertyUpdate = (id: string) => {
-    console.log(`Updating property with ${id}...`)
+    navigate(`/edit-property/${id}`)
   }
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
