@@ -22,7 +22,7 @@ const EditPropertyPage = (): ReactElement => {
     askingPrice: 0,
     address: ''
   })
-  const [avatarImageUrl, setAvatarImageUrl] = useState<string>('')
+  const [avatarUrl, setAvatarImageUrl] = useState<string>('')
   const [file, setFile] = useState<File>()
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [uploadSuccess, setUploadSuccess] = useState<boolean>(false)
@@ -45,7 +45,7 @@ const EditPropertyPage = (): ReactElement => {
           }
         }
       )
-      setAvatarImageUrl(data.asset_url)
+      setAvatarImageUrl(data.url)
       setUploadSuccess(true)
     }
   }
@@ -54,8 +54,9 @@ const EditPropertyPage = (): ReactElement => {
     e.preventDefault()
     try {
       await api.put(
-        `${import.meta.env.VITE_API_BASE_URL}/api/properties`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/properties/${id}`,
         {
+          avatarUrl,
           listingUrl: formValues.listingUrl,
           askingPrice: +formValues.askingPrice,
           address: formValues.address
@@ -102,8 +103,6 @@ const EditPropertyPage = (): ReactElement => {
   useEffect(() => {
     id && getPropertyById(id)
   }, [])
-
-  console.log(avatarImageUrl)
 
   return (
     <Layout>
@@ -153,7 +152,7 @@ const EditPropertyPage = (): ReactElement => {
 
             <div className="mb-6">
               <label className="block text-gray-700">Avatar image</label>
-              <div className="flex justify-between	">
+              <div className="flex justify-between">
                 <input
                   id="file_input"
                   type="file"
@@ -163,7 +162,7 @@ const EditPropertyPage = (): ReactElement => {
               </div>
             </div>
             <div className="mb-6">
-              <CtaButton copy="Add Property" />
+              <CtaButton copy="Update Property" />
             </div>
           </form>
         )}
