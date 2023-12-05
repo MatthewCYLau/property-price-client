@@ -38,7 +38,7 @@ const PropertyPage = (): ReactElement => {
     askingPrice: 0,
     address: '',
     userId: '',
-    avatarId: 1
+    avatarUrl: '1'
   })
 
   const [priceAnalysis, setPriceAnalysis] = useState<PriceAnalysis>({
@@ -170,7 +170,7 @@ const PropertyPage = (): ReactElement => {
               deletePropertyHandler={() => handleOnPropertyDelete(property.id)}
               updatePropertyHandler={() => handleOnPropertyUpdate(property.id)}
               currentUserIsPropertyCreator={property.userId === state.user.id}
-              avatarId={property.avatarId}
+              avatarUrl={property.avatarUrl}
             />
           </>
         )}

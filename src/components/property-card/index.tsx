@@ -10,7 +10,7 @@ interface Props {
   currentUserIsPropertyCreator?: boolean
   deletePropertyHandler?: () => void
   updatePropertyHandler?: () => void
-  avatarId: number
+  avatarUrl: string
 }
 
 const isNewProperty = (created: string) => {
@@ -21,6 +21,15 @@ const isNewProperty = (created: string) => {
   return hours < 24
 }
 
+const getAvatarImage = (avatarUrl: string) => {
+  const imageFormats = ['jpeg', 'png']
+  if (imageFormats.some((n) => avatarUrl.includes(n))) {
+    return avatarUrl
+  } else {
+    return `/house-${avatarUrl.toString()}.png`
+  }
+}
+
 const PropertyCard: FC<Props> = ({
   address,
   price,
@@ -29,7 +38,7 @@ const PropertyCard: FC<Props> = ({
   listingUrl,
   deletePropertyHandler,
   updatePropertyHandler,
-  avatarId
+  avatarUrl
 }) => {
   return (
     <div className="p-4 transition-shadow border rounded-lg shadow-sm hover:shadow-lg">
@@ -42,7 +51,7 @@ const PropertyCard: FC<Props> = ({
         </div>
         <img
           className="w-1/4 h-1/4"
-          src={`/house-${avatarId.toString()}.png`}
+          src={getAvatarImage(avatarUrl)}
           alt="house"
         />
       </div>

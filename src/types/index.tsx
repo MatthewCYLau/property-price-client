@@ -20,7 +20,7 @@ export interface Property {
   askingPrice: number
   address: string
   userId: string
-  avatarId: number
+  avatarUrl: string
 }
 
 export interface PriceSuggestion {

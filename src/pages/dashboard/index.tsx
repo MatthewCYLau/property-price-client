@@ -105,7 +105,7 @@ const DashboardPage = (): ReactElement => {
                     address={n.address}
                     price={n.askingPrice}
                     created={new Date(Date.parse(n.created)).toDateString()}
-                    avatarId={n.avatarId}
+                    avatarUrl={n.avatarUrl}
                   />
                 </Link>
               ))}
