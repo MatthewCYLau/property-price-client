@@ -157,7 +157,7 @@ const DashboardPage = (): ReactElement => {
                     priceSuggestions.map((n) => (
                       <TableRow
                         key={n.id}
-                        id={n.id}
+                        propertyId={n.property.id}
                         address={n.property.address}
                         askingPrice={n.property.askingPrice}
                         differenceInPercentage={n.differenceInPercentage}
