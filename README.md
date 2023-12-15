@@ -10,6 +10,7 @@ The list of repositories are as follow:
 
 - ASP.NET Core web API repository [here](https://github.com/MatthewCYLau/property-price-api)
 - React with Vite client repository [here](https://github.com/MatthewCYLau/property-price-client)
+- Google Cloud Platform (GCP) with Terraform infrastructure repository [here](https://github.com/MatthewCYLau/property-price-infrastructure)
 
 ## Run/build app locally
 
