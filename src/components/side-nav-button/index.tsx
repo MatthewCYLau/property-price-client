@@ -13,7 +13,7 @@ const SideNavButton: FC<Props> = ({ index, toUrl, iconComponent, copy }) => {
     <li>
       <Link
         to={toUrl}
-        className="flex items-center p-2 space-x-2 rounded-md hover:bg-gray-100"
+        className="flex items-center p-2 space-x-2 rounded-md hover:bg-gray-100 mb-2"
       >
         <span>{iconComponent}</span>
         <span>{copy}</span>
