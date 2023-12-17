@@ -10,6 +10,7 @@ import { Store } from '../store'
 import AddPropertyPage from '../pages/add-property'
 import EditPropertyPage from '../pages/edit-property'
 import UpdateUserPage from '../pages/update-user'
+import StatisticsPage from '../pages/statistics'
 
 type PrivateRouteProps = {
   component: React.ComponentType<any>
@@ -51,6 +52,10 @@ export const router = createBrowserRouter([
   {
     path: '/edit-property/:id',
     element: <PrivateRoute component={EditPropertyPage} />
+  },
+  {
+    path: '/statistics',
+    element: <PrivateRoute component={StatisticsPage} />
   },
   {
     path: '/*',

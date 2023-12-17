@@ -22,6 +22,11 @@ const sideNavButtons: {
     toUrl: '/update-user',
     iconComponent: <CogwheelIcon />,
     copy: 'Update User'
+  },
+  {
+    toUrl: '/statistics',
+    iconComponent: <CogwheelIcon />,
+    copy: 'Statistics'
   }
 ]
 

@@ -11,6 +11,8 @@ const getHeader = (path: string): string => {
     return 'Add Property'
   } else if (path.includes('update-user')) {
     return 'Update User'
+  } else if (path.includes('statistics')) {
+    return 'Statistics'
   }
   return 'Dashboard'
 }
