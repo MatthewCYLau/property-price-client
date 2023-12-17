@@ -6,6 +6,7 @@ import HomeIcon from '../icons/home-icon'
 import DocumentIcon from '../icons/document-icon'
 import CogwheelIcon from '../icons/cogwheel-icon'
 import SideNavButton from '../side-nav-button'
+import ChartIcon from '../icons/chart-icon'
 
 const sideNavButtons: {
   toUrl: string
@@ -25,7 +26,7 @@ const sideNavButtons: {
   },
   {
     toUrl: '/statistics',
-    iconComponent: <CogwheelIcon />,
+    iconComponent: <ChartIcon />,
     copy: 'Statistics'
   }
 ]
