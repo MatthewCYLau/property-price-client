@@ -82,3 +82,9 @@ export const notificationCopyMap: NotificationCopyMap<string> = {
   BelowAsking: ' below asking',
   Asking: 'asking'
 }
+
+export interface PriceSuggestionsStatistics {
+  aboveAsking: number
+  asking: number
+  belowAsking: number
+}
