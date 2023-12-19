@@ -5,13 +5,21 @@ import { AxiosResponse } from 'axios'
 import { Doughnut } from 'react-chartjs-2'
 import Layout from '../../components/layout'
 import Loader from '../../components/loader'
-import { PriceSuggestionsStatistics } from '../../types'
+import {
+  PriceSuggestionsStatistics,
+  notificationCopyMap,
+  NotificationType
+} from '../../types'
 
 const getDoughnutData = (stats: PriceSuggestionsStatistics) => ({
-  labels: ['Above asking', 'Asking', 'Below asking'],
+  labels: [
+    notificationCopyMap[NotificationType.ABOVE_ASKING],
+    notificationCopyMap[NotificationType.ASKING],
+    notificationCopyMap[NotificationType.BELOW_ASKING]
+  ],
   datasets: [
     {
-      label: 'Price suggestions statistics',
+      label: 'count',
       data: [stats.aboveAsking, stats.asking, stats.belowAsking],
       backgroundColor: [
         'rgb(99 102 241)',
@@ -54,7 +62,8 @@ const StatisticsPage = (): ReactElement => {
         {isLoading ? (
           <Loader />
         ) : (
-          <div className="w-full">
+          <div className="w-full flex flex-col items-center">
+            <h3 className="mt-6 text-xl">Price Suggestions Statistics</h3>
             <Doughnut data={getDoughnutData(statistics)} />
           </div>
         )}
