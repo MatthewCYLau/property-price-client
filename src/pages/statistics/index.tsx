@@ -1,9 +1,27 @@
+import 'chart.js/auto'
 import { ReactElement, useState, useEffect } from 'react'
 import api from '../../utils/api'
 import { AxiosResponse } from 'axios'
+import { Doughnut } from 'react-chartjs-2'
 import Layout from '../../components/layout'
 import Loader from '../../components/loader'
 import { PriceSuggestionsStatistics } from '../../types'
+
+const getDoughnutData = (stats: PriceSuggestionsStatistics) => ({
+  labels: ['Above asking', 'Asking', 'Below asking'],
+  datasets: [
+    {
+      label: 'Price suggestions statistics',
+      data: [stats.aboveAsking, stats.asking, stats.belowAsking],
+      backgroundColor: [
+        'rgb(99 102 241)',
+        'rgb(248 113 113)',
+        'rgb(251 191 36)'
+      ],
+      hoverOffset: 4
+    }
+  ]
+})
 
 const StatisticsPage = (): ReactElement => {
   const [statistics, setStatistics] = useState<PriceSuggestionsStatistics>({
@@ -36,11 +54,9 @@ const StatisticsPage = (): ReactElement => {
         {isLoading ? (
           <Loader />
         ) : (
-          <>
-            <p>{statistics.aboveAsking}</p>
-            <p>{statistics.asking}</p>
-            <p>{statistics.belowAsking}</p>
-          </>
+          <div className="w-full">
+            <Doughnut data={getDoughnutData(statistics)} />
+          </div>
         )}
       </div>
     </Layout>
