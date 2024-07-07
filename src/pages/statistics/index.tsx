@@ -2,6 +2,7 @@ import 'chart.js/auto'
 import { ReactElement, useState, useEffect } from 'react'
 import DatePicker from 'react-datepicker'
 import api from '../../utils/api'
+import { convertDateToValidFormet } from '../../utils/date'
 import { AxiosResponse } from 'axios'
 import { Doughnut } from 'react-chartjs-2'
 import Layout from '../../components/layout'
@@ -61,7 +62,31 @@ const StatisticsPage = (): ReactElement => {
 
   const submitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault()
-    console.log('exporting CSV...')
+    try {
+      await api
+        .post(
+          `${
+            import.meta.env.VITE_API_BASE_URL
+          }/api/properties/export-csv?startDate=${convertDateToValidFormet(
+            fromDate
+          )}&endDate=${convertDateToValidFormet(toDate)}`,
+          {
+            responseType: 'blob'
+          }
+        )
+        .then((response) => {
+          const url = window.URL.createObjectURL(new Blob([response.data]))
+          const link = document.createElement('a')
+          link.href = url
+          const fileName = `${new Date().toLocaleDateString()}.csv`
+          link.setAttribute('download', fileName)
+          document.body.appendChild(link)
+          link.click()
+          link.remove()
+        })
+    } catch (err) {
+      console.log(err)
+    }
   }
   useEffect(() => {
     getPriceSuggestionsStatistics()
