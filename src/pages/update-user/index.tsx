@@ -1,5 +1,6 @@
 import { ReactElement, useState, useContext, ChangeEvent } from 'react'
 import api from '../../utils/api'
+import cn from 'classnames'
 import { v4 as uuid } from 'uuid'
 import { useNavigate } from 'react-router-dom'
 import { Store } from '../../store'
@@ -110,7 +111,9 @@ const UpdateUserPage = (): ReactElement => {
               </span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-5 h-5 ml-2 -mr-1"
+                className={cn('w-5 h-5 ml-2 -mr-1', {
+                  'rotate-180': showDropdown
+                })}
                 viewBox="0 0 20 20"
                 fill="currentColor"
                 aria-hidden="true"
@@ -127,12 +130,12 @@ const UpdateUserPage = (): ReactElement => {
                 id="dropdown-menu"
                 className="absolute w-full right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 p-1 space-y-1"
               >
-                <input
+                {/* <input
                   id="search-input"
                   className="block w-full px-4 py-2 text-gray-800 border rounded-md  border-gray-300 focus:outline-none"
                   type="text"
                   placeholder="Search items"
-                />
+                /> */}
                 {userTypes.map((n) => (
                   <button
                     key={n}
