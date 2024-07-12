@@ -1,4 +1,10 @@
-import { ReactElement, useState, useContext, ChangeEvent } from 'react'
+import {
+  ReactElement,
+  useState,
+  useContext,
+  ChangeEvent,
+  useEffect
+} from 'react'
 import api from '../../utils/api'
 import cn from 'classnames'
 import { v4 as uuid } from 'uuid'
@@ -15,6 +21,10 @@ interface Values {
   userType: UserType
 }
 
+interface SearchValues {
+  searchTerm: string
+}
+
 type UserTypeMap = {
   [name in UserType]: string
 }
@@ -26,7 +36,7 @@ const userTypeButtonCopies: UserTypeMap = {
   Renter: 'Renter'
 }
 
-const userTypes: readonly UserType[] = [
+const userTypes: UserType[] = [
   UserType.FIRST_TIME_BUYER,
   UserType.HOME_OWNER,
   UserType.LANDLORD,
@@ -35,6 +45,8 @@ const userTypes: readonly UserType[] = [
 
 const UpdateUserPage = (): ReactElement => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false)
+  const [userTypesDropdownList, setUserTypesDropdownList] =
+    useState<UserType[]>(userTypes)
   const { dispatch, state } = useContext(Store)
   const navigate = useNavigate()
   const [formValues, setFormValues] = useState<Values>({
@@ -42,9 +54,16 @@ const UpdateUserPage = (): ReactElement => {
     password: '',
     userType: UserType.RENTER
   })
+  const [searchValue, setSearchValue] = useState<SearchValues>({
+    searchTerm: ''
+  })
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value })
+  }
+
+  const handleSearchInputOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue({ ...searchValue, [e.target.name]: e.target.value })
   }
 
   const dropdownItemOnClickHandler = (n: UserType) => {
@@ -54,6 +73,16 @@ const UpdateUserPage = (): ReactElement => {
     }))
     setShowDropdown(!showDropdown)
   }
+
+  useEffect(() => {
+    setUserTypesDropdownList(
+      userTypes.filter((n) =>
+        userTypeButtonCopies[n]
+          .toLowerCase()
+          .includes(searchValue.searchTerm.toLocaleLowerCase())
+      )
+    )
+  }, [searchValue.searchTerm])
 
   const submitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault()
@@ -130,13 +159,16 @@ const UpdateUserPage = (): ReactElement => {
                 id="dropdown-menu"
                 className="absolute w-full right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 p-1 space-y-1"
               >
-                {/* <input
+                <input
                   id="search-input"
                   className="block w-full px-4 py-2 text-gray-800 border rounded-md  border-gray-300 focus:outline-none"
                   type="text"
                   placeholder="Search items"
-                /> */}
-                {userTypes.map((n) => (
+                  name="searchTerm"
+                  value={searchValue.searchTerm}
+                  onChange={(e) => handleSearchInputOnChange(e)}
+                />
+                {userTypesDropdownList.map((n) => (
                   <button
                     key={n}
                     onClick={() => dropdownItemOnClickHandler(n)}
