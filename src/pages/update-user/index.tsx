@@ -84,15 +84,31 @@ const UpdateUserPage = (): ReactElement => {
     )
   }, [searchValue.searchTerm])
 
+  const evaluatePayload = (): {
+    email: string
+    password?: string
+    userType: UserType
+  } => {
+    if (formValues.password) {
+      return {
+        email: state.user.email,
+        password: formValues.password,
+        userType: formValues.userType
+      }
+    } else {
+      return {
+        email: state.user.email,
+        userType: formValues.userType
+      }
+    }
+  }
+
   const submitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault()
     try {
       await api.patch(
         `${import.meta.env.VITE_API_BASE_URL}/api/users/${state.user.id}`,
-        {
-          ...formValues,
-          email: state.user.email
-        },
+        evaluatePayload(),
         {
           headers: {
             'content-type': 'application/json'
