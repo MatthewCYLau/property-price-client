@@ -1,7 +1,8 @@
 import { ReactElement, useState, useContext, ChangeEvent } from 'react'
 import { v4 as uuid } from 'uuid'
-import { useNavigate } from 'react-router-dom'
 import { Store } from '../../store'
+import api from '../../utils/api'
+import { ModalActionType } from '../../types'
 import Layout from '../../components/layout'
 import CtaButton from '../../components/cta-button'
 import { ActionType as AlertActionType } from '../../store/alert/action-types'
@@ -12,7 +13,6 @@ interface Values {
 
 const AnalysisJobsPage = (): ReactElement => {
   const { dispatch } = useContext(Store)
-  const navigate = useNavigate()
   const [formValues, setFormValues] = useState<Values>({
     postcode: ''
   })
@@ -24,7 +24,26 @@ const AnalysisJobsPage = (): ReactElement => {
   const submitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault()
     try {
-      navigate('/dashboard')
+      const res = await api.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/jobs`,
+        formValues,
+        {
+          headers: {
+            'content-type': 'application/json'
+          }
+        }
+      )
+      const ingestJobId = res.data.ingestJobId
+      dispatch({
+        type: ModalActionType.SET_MODAL,
+        payload: {
+          message: `Analysis job created ${ingestJobId}`,
+          onConfirm: () => {
+            dispatch({ type: ModalActionType.REMOVE_MODAL })
+            setFormValues({ postcode: '' })
+          }
+        }
+      })
     } catch (err: any) {
       const error: Error = err.response.data
       dispatch({

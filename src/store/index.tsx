@@ -51,7 +51,7 @@ type Action =
       payload: {
         message: string
         onConfirm: () => void
-        onCancel: () => void
+        onCancel?: () => void
       }
     }
   | {
