@@ -7,6 +7,7 @@ import DocumentIcon from '../icons/document-icon'
 import CogwheelIcon from '../icons/cogwheel-icon'
 import SideNavButton from '../side-nav-button'
 import ChartIcon from '../icons/chart-icon'
+import MathIcon from '../icons/math-icon'
 
 const sideNavButtons: {
   toUrl: string
@@ -28,6 +29,11 @@ const sideNavButtons: {
     toUrl: '/statistics',
     iconComponent: <ChartIcon />,
     copy: 'Statistics'
+  },
+  {
+    toUrl: '/analysis-jobs',
+    iconComponent: <MathIcon />,
+    copy: 'Analysis Jobs'
   }
 ]
 

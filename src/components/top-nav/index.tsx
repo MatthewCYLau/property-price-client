@@ -13,6 +13,8 @@ const getHeader = (path: string): string => {
     return 'Update User'
   } else if (path.includes('statistics')) {
     return 'Statistics'
+  } else if (path.includes('analysis-jobs')) {
+    return 'Analysis Jobs'
   }
   return 'Dashboard'
 }

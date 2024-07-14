@@ -11,6 +11,7 @@ import AddPropertyPage from '../pages/add-property'
 import EditPropertyPage from '../pages/edit-property'
 import UpdateUserPage from '../pages/update-user'
 import StatisticsPage from '../pages/statistics'
+import AnalysisJobsPage from '../pages/analysis-jobs'
 
 type PrivateRouteProps = {
   component: React.ComponentType<any>
@@ -56,6 +57,10 @@ export const router = createBrowserRouter([
   {
     path: '/statistics',
     element: <PrivateRoute component={StatisticsPage} />
+  },
+  {
+    path: '/analysis-jobs',
+    element: <PrivateRoute component={AnalysisJobsPage} />
   },
   {
     path: '/*',
