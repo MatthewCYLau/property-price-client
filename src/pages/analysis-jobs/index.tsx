@@ -21,7 +21,7 @@ const AnalysisJobsPage = (): ReactElement => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value })
   }
 
-  const submitHandler = async (e: React.SyntheticEvent) => {
+  const createAnalysisJobSubmitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault()
     try {
       const res = await api.post(
@@ -53,10 +53,14 @@ const AnalysisJobsPage = (): ReactElement => {
     }
   }
 
+  const getAnalysisJobSubmitHandler = async (e: React.SyntheticEvent) => {
+    e.preventDefault()
+  }
+
   return (
     <Layout>
       <div className="grid grid-cols-1 gap-5 mt-6 sm:grid-cols-2 lg:grid-cols-3">
-        <form onSubmit={submitHandler}>
+        <form onSubmit={createAnalysisJobSubmitHandler}>
           <div className="mb-6">
             <label className="block text-gray-700">Postcode</label>
             <input
@@ -72,6 +76,26 @@ const AnalysisJobsPage = (): ReactElement => {
           </div>
           <div className="mb-6">
             <CtaButton copy="Create Analysis Job" />
+          </div>
+        </form>
+      </div>
+      <div className="grid grid-cols-1 gap-5 mt-6 sm:grid-cols-2 lg:grid-cols-3">
+        <form onSubmit={getAnalysisJobSubmitHandler}>
+          <div className="mb-6">
+            <label className="block text-gray-700">Postcode</label>
+            <input
+              type="text"
+              name="postcode"
+              id="postcode"
+              placeholder="Enter Postcode"
+              className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
+                focus:bg-white focus:outline-none"
+              // value={formValues.postcode}
+              // onChange={(e) => onChange(e)}
+            />
+          </div>
+          <div className="mb-6">
+            <CtaButton copy="Get Analysis Job" />
           </div>
         </form>
       </div>
