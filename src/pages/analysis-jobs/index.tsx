@@ -7,18 +7,37 @@ import Layout from '../../components/layout'
 import CtaButton from '../../components/cta-button'
 import { ActionType as AlertActionType } from '../../store/alert/action-types'
 
-interface Values {
+interface CreateAnalysisJobValues {
   postcode: string
+}
+
+interface GetAnalysisJobValues {
+  jobId: string
 }
 
 const AnalysisJobsPage = (): ReactElement => {
   const { dispatch } = useContext(Store)
-  const [formValues, setFormValues] = useState<Values>({
-    postcode: ''
-  })
+  const [createAnalysisJobformValues, setCreateAnalysisJobformValues] =
+    useState<CreateAnalysisJobValues>({
+      postcode: ''
+    })
+  const [getAnalysisJobformValues, setGetAnalysisJobformValues] =
+    useState<GetAnalysisJobValues>({
+      jobId: ''
+    })
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormValues({ ...formValues, [e.target.name]: e.target.value })
+  const onCreateAnalysisJobFormChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setCreateAnalysisJobformValues({
+      ...createAnalysisJobformValues,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const onGetAnalysisJobFormChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setGetAnalysisJobformValues({
+      ...getAnalysisJobformValues,
+      [e.target.name]: e.target.value
+    })
   }
 
   const createAnalysisJobSubmitHandler = async (e: React.SyntheticEvent) => {
@@ -26,7 +45,7 @@ const AnalysisJobsPage = (): ReactElement => {
     try {
       const res = await api.post(
         `${import.meta.env.VITE_API_BASE_URL}/api/jobs`,
-        formValues,
+        createAnalysisJobformValues,
         {
           headers: {
             'content-type': 'application/json'
@@ -40,7 +59,7 @@ const AnalysisJobsPage = (): ReactElement => {
           message: `Analysis job created ${ingestJobId}`,
           onConfirm: () => {
             dispatch({ type: ModalActionType.REMOVE_MODAL })
-            setFormValues({ postcode: '' })
+            setCreateAnalysisJobformValues({ postcode: '' })
           }
         }
       })
@@ -55,6 +74,35 @@ const AnalysisJobsPage = (): ReactElement => {
 
   const getAnalysisJobSubmitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault()
+    try {
+      const res = await api.get(
+        `${import.meta.env.VITE_API_BASE_URL}/api/jobs/${
+          getAnalysisJobformValues.jobId
+        }`
+      )
+      let message = ''
+      if (res.data.complete) {
+        message = `Suggest property price ${res.data.transactionPrice}`
+      } else {
+        message = 'Job is still in progress...'
+      }
+      dispatch({
+        type: ModalActionType.SET_MODAL,
+        payload: {
+          message,
+          onConfirm: () => {
+            dispatch({ type: ModalActionType.REMOVE_MODAL })
+            setGetAnalysisJobformValues({ jobId: '' })
+          }
+        }
+      })
+    } catch (err: any) {
+      const error: Error = err.response.data
+      dispatch({
+        type: AlertActionType.SET_ALERT,
+        payload: { id: uuid(), message: error.message, severity: 'error' }
+      })
+    }
   }
 
   return (
@@ -70,8 +118,8 @@ const AnalysisJobsPage = (): ReactElement => {
               placeholder="Enter Postcode"
               className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
                 focus:bg-white focus:outline-none"
-              value={formValues.postcode}
-              onChange={(e) => onChange(e)}
+              value={createAnalysisJobformValues.postcode}
+              onChange={(e) => onCreateAnalysisJobFormChange(e)}
             />
           </div>
           <div className="mb-6">
@@ -85,13 +133,13 @@ const AnalysisJobsPage = (): ReactElement => {
             <label className="block text-gray-700">Postcode</label>
             <input
               type="text"
-              name="postcode"
-              id="postcode"
-              placeholder="Enter Postcode"
+              name="jobId"
+              id="jobId"
+              placeholder="Enter Job ID"
               className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
                 focus:bg-white focus:outline-none"
-              // value={formValues.postcode}
-              // onChange={(e) => onChange(e)}
+              value={getAnalysisJobformValues.jobId}
+              onChange={(e) => onGetAnalysisJobFormChange(e)}
             />
           </div>
           <div className="mb-6">
