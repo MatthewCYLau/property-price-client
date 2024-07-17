@@ -1,8 +1,15 @@
-import { ReactElement, useState, useContext, ChangeEvent } from 'react'
+import {
+  ReactElement,
+  useState,
+  useContext,
+  ChangeEvent,
+  useEffect
+} from 'react'
 import { v4 as uuid } from 'uuid'
 import { Store } from '../../store'
 import api from '../../utils/api'
-import { ModalActionType } from '../../types'
+import { AxiosResponse } from 'axios'
+import { ModalActionType, AnalysisJob } from '../../types'
 import Layout from '../../components/layout'
 import CtaButton from '../../components/cta-button'
 import { ActionType as AlertActionType } from '../../store/alert/action-types'
@@ -17,6 +24,7 @@ interface GetAnalysisJobValues {
 
 const AnalysisJobsPage = (): ReactElement => {
   const { dispatch } = useContext(Store)
+  const [analysisJobs, setAnalysisJobs] = useState<AnalysisJob[]>([])
   const [createAnalysisJobformValues, setCreateAnalysisJobformValues] =
     useState<CreateAnalysisJobValues>({
       postcode: ''
@@ -104,6 +112,21 @@ const AnalysisJobsPage = (): ReactElement => {
       })
     }
   }
+
+  const getAnalysisJobs = async () => {
+    try {
+      const { data }: AxiosResponse<AnalysisJob[]> = await api.get(
+        `${import.meta.env.VITE_API_BASE_URL}/api/jobs`
+      )
+      setAnalysisJobs(data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  useEffect(() => {
+    getAnalysisJobs()
+  }, [])
 
   return (
     <Layout>

@@ -88,3 +88,12 @@ export interface PriceSuggestionsStatistics {
   asking: number
   belowAsking: number
 }
+
+export interface AnalysisJob {
+  id: string
+  postcode: string
+  transactionPrice: number
+  complete: boolean
+  ingestJobStatus: number
+  created: string
+}
