@@ -219,7 +219,10 @@ const PropertyPage = (): ReactElement => {
             value={formValues.note}
             onChange={(e) => onChange(e)}
           />
-          <CtaButton copy="Submit suggestion" />
+          <CtaButton
+            copy="Submit suggestion"
+            disableSubmit={!formValues.note}
+          />
         </form>
       </div>
     </Layout>
