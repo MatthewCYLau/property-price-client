@@ -14,6 +14,7 @@ import Layout from '../../components/layout'
 import CtaButton from '../../components/cta-button'
 import { ActionType as AlertActionType } from '../../store/alert/action-types'
 import ProgressPill from '../../components/progress-pill'
+import DeleteIcon from '../../components/icons/delete-icon'
 
 interface CreateAnalysisJobValues {
   postcode: string
@@ -82,6 +83,18 @@ const AnalysisJobsPage = (): ReactElement => {
     }
   }
 
+  const handleAnalysisJoOnDelete = (id: string) => {
+    dispatch({
+      type: ModalActionType.SET_MODAL,
+      payload: {
+        message: 'Do you want to delete analysis job?',
+        onCancel: () => dispatch({ type: ModalActionType.REMOVE_MODAL }),
+        onConfirm: () => {
+          dispatch({ type: ModalActionType.REMOVE_MODAL })
+        }
+      }
+    })
+  }
   const getAnalysisJobSubmitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault()
     try {
@@ -204,6 +217,12 @@ const AnalysisJobsPage = (): ReactElement => {
                     >
                       Complete
                     </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+                    >
+                      Action
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -229,6 +248,14 @@ const AnalysisJobsPage = (): ReactElement => {
                           <div className="text-sm font-medium text-gray-900">
                             <ProgressPill complete={n.complete} />
                           </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <button
+                            onClick={() => handleAnalysisJoOnDelete(n.id)}
+                            className="hover:text-white"
+                          >
+                            <DeleteIcon />
+                          </button>
                         </td>
                       </tr>
                     ))}
