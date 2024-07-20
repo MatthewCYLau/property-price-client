@@ -13,6 +13,7 @@ import { ModalActionType, AnalysisJob } from '../../types'
 import Layout from '../../components/layout'
 import CtaButton from '../../components/cta-button'
 import { ActionType as AlertActionType } from '../../store/alert/action-types'
+import ProgressPill from '../../components/progress-pill'
 
 interface CreateAnalysisJobValues {
   postcode: string
@@ -68,6 +69,7 @@ const AnalysisJobsPage = (): ReactElement => {
           onConfirm: () => {
             dispatch({ type: ModalActionType.REMOVE_MODAL })
             setCreateAnalysisJobformValues({ postcode: '' })
+            getAnalysisJobs()
           }
         }
       })
@@ -206,7 +208,30 @@ const AnalysisJobsPage = (): ReactElement => {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {!!analysisJobs.length &&
-                    analysisJobs.map((n) => console.log(n))}
+                    analysisJobs.map((n) => (
+                      <tr className="transition-all hover:bg-gray-100 hover:shadow-lg">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">
+                            {new Date(Date.parse(n.created)).toLocaleString()}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">
+                            {n.postcode}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-medium text-gray-900">
+                            {`£${n.transactionPrice}`}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-medium text-gray-900">
+                            <ProgressPill complete={n.complete} />
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>
