@@ -251,7 +251,7 @@ const AnalysisJobsPage = (): ReactElement => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm font-medium text-gray-900">
-                            {`£${n.transactionPrice}`}
+                            {`£${n.transactionPrice.toLocaleString()}`}
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
