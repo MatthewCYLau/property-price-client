@@ -83,6 +83,15 @@ const AnalysisJobsPage = (): ReactElement => {
     }
   }
 
+  const deleteAnalysisJobById = async (id: string) => {
+    try {
+      await api.delete(`${import.meta.env.VITE_API_BASE_URL}/api/jobs/${id}`)
+      getAnalysisJobs()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   const handleAnalysisJoOnDelete = (id: string) => {
     dispatch({
       type: ModalActionType.SET_MODAL,
@@ -91,6 +100,7 @@ const AnalysisJobsPage = (): ReactElement => {
         onCancel: () => dispatch({ type: ModalActionType.REMOVE_MODAL }),
         onConfirm: () => {
           dispatch({ type: ModalActionType.REMOVE_MODAL })
+          deleteAnalysisJobById(id)
         }
       }
     })
