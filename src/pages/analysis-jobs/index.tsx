@@ -71,6 +71,9 @@ const AnalysisJobsPage = (): ReactElement => {
             dispatch({ type: ModalActionType.REMOVE_MODAL })
             setCreateAnalysisJobformValues({ postcode: '' })
             getAnalysisJobs()
+          },
+          onCopyClick: () => {
+            navigator.clipboard.writeText(ingestJobId)
           }
         }
       })

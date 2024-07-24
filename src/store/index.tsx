@@ -17,6 +17,7 @@ export type AppState = {
     message: string
     onConfirm?: () => void
     onCancel?: () => void
+    onCopyClick?: () => void
   }
   user:
     | User
@@ -52,6 +53,7 @@ type Action =
         message: string
         onConfirm: () => void
         onCancel?: () => void
+        onCopyClick?: () => void
       }
     }
   | {
@@ -101,7 +103,8 @@ function reducer(state: AppState, action: Action): AppState {
           showModal: true,
           message: action.payload.message,
           onCancel: action.payload.onCancel,
-          onConfirm: action.payload.onConfirm
+          onConfirm: action.payload.onConfirm,
+          onCopyClick: action.payload.onCopyClick
         }
       }
     case ModalActionType.REMOVE_MODAL:
