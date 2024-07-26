@@ -11,6 +11,7 @@ import api from '../../utils/api'
 import { AxiosResponse } from 'axios'
 import { ModalActionType, AnalysisJob } from '../../types'
 import Layout from '../../components/layout'
+import Loader from '../../components/loader'
 import CtaButton from '../../components/cta-button'
 import { ActionType as AlertActionType } from '../../store/alert/action-types'
 import ProgressPill from '../../components/progress-pill'
@@ -27,6 +28,7 @@ interface GetAnalysisJobValues {
 const AnalysisJobsPage = (): ReactElement => {
   const { dispatch } = useContext(Store)
   const [analysisJobs, setAnalysisJobs] = useState<AnalysisJob[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [createAnalysisJobformValues, setCreateAnalysisJobformValues] =
     useState<CreateAnalysisJobValues>({
       postcode: ''
@@ -149,6 +151,8 @@ const AnalysisJobsPage = (): ReactElement => {
       setAnalysisJobs(data)
     } catch (err) {
       console.log(err)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -200,83 +204,87 @@ const AnalysisJobsPage = (): ReactElement => {
       </div>
       <h3 className="mt-6 text-xl">Analysis Jobs</h3>
       <div className="flex flex-col mt-6">
-        <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-            <div className="overflow-hidden border-b border-gray-200 rounded-md shadow-md">
-              <table className="min-w-full overflow-x-scroll divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
-                    >
-                      Created
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
-                    >
-                      Postcode
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
-                    >
-                      Transaction price
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
-                    >
-                      Complete
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
-                    >
-                      Action
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {!!analysisJobs.length &&
-                    analysisJobs.map((n) => (
-                      <tr className="transition-all hover:bg-gray-100 hover:shadow-lg">
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {new Date(Date.parse(n.created)).toLocaleString()}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {n.postcode}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm font-medium text-gray-900">
-                            {`£${n.transactionPrice.toLocaleString()}`}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm font-medium text-gray-900">
-                            <ProgressPill complete={n.complete} />
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <button
-                            onClick={() => handleAnalysisJoOnDelete(n.id)}
-                            className="hover:text-white"
-                          >
-                            <DeleteIcon />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+              <div className="overflow-hidden border-b border-gray-200 rounded-md shadow-md">
+                <table className="min-w-full overflow-x-scroll divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+                      >
+                        Created
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+                      >
+                        Postcode
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+                      >
+                        Transaction price
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+                      >
+                        Complete
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+                      >
+                        Action
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {!!analysisJobs.length &&
+                      analysisJobs.map((n) => (
+                        <tr className="transition-all hover:bg-gray-100 hover:shadow-lg">
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {new Date(Date.parse(n.created)).toLocaleString()}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {n.postcode}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm font-medium text-gray-900">
+                              {`£${n.transactionPrice.toLocaleString()}`}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm font-medium text-gray-900">
+                              <ProgressPill complete={n.complete} />
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <button
+                              onClick={() => handleAnalysisJoOnDelete(n.id)}
+                              className="hover:text-white"
+                            >
+                              <DeleteIcon />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </Layout>
   )
