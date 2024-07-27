@@ -146,7 +146,7 @@ const PropertyPage = (): ReactElement => {
     e.preventDefault()
     setFormValues((prevState) => ({
       ...prevState,
-      differenceInPercentage: prevState.differenceInPercentage + 1
+      differenceInPercentage: +prevState.differenceInPercentage + 1
     }))
   }
 
