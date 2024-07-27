@@ -97,3 +97,8 @@ export interface AnalysisJob {
   ingestJobStatus: number
   created: string
 }
+
+export interface AnalysisJobsResponse {
+  paginationMetadata: PaginationMeta
+  ingestJobs: AnalysisJob[]
+}

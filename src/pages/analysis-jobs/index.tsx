@@ -9,7 +9,7 @@ import { v4 as uuid } from 'uuid'
 import { Store } from '../../store'
 import api from '../../utils/api'
 import { AxiosResponse } from 'axios'
-import { ModalActionType, AnalysisJob } from '../../types'
+import { ModalActionType, AnalysisJob, AnalysisJobsResponse } from '../../types'
 import Layout from '../../components/layout'
 import Loader from '../../components/loader'
 import CtaButton from '../../components/cta-button'
@@ -145,10 +145,10 @@ const AnalysisJobsPage = (): ReactElement => {
 
   const getAnalysisJobs = async () => {
     try {
-      const { data }: AxiosResponse<AnalysisJob[]> = await api.get(
+      const { data }: AxiosResponse<AnalysisJobsResponse> = await api.get(
         `${import.meta.env.VITE_API_BASE_URL}/api/jobs`
       )
-      setAnalysisJobs(data)
+      setAnalysisJobs(data.ingestJobs)
     } catch (err) {
       console.log(err)
     } finally {
