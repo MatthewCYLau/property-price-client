@@ -29,6 +29,9 @@ const AnalysisJobsPage = (): ReactElement => {
   const { dispatch } = useContext(Store)
   const [analysisJobs, setAnalysisJobs] = useState<AnalysisJob[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [currentPage, setCurrentPage] = useState<number>(1)
+  const [pageCount, setPageCount] = useState<number>(1)
+  const pageSize: number = 10
   const [createAnalysisJobformValues, setCreateAnalysisJobformValues] =
     useState<CreateAnalysisJobValues>({
       postcode: ''
@@ -146,9 +149,12 @@ const AnalysisJobsPage = (): ReactElement => {
   const getAnalysisJobs = async () => {
     try {
       const { data }: AxiosResponse<AnalysisJobsResponse> = await api.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/jobs`
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/jobs/?page=${currentPage}&pageSize=${pageSize}`
       )
       setAnalysisJobs(data.ingestJobs)
+      setPageCount(data.paginationMetadata.totalPages)
     } catch (err) {
       console.log(err)
     } finally {
@@ -156,9 +162,16 @@ const AnalysisJobsPage = (): ReactElement => {
     }
   }
 
+  const handleOnNextPageClick = () => setCurrentPage(currentPage + 1)
+  const handleOnPreviousPageClick = () => setCurrentPage(currentPage - 1)
+
   useEffect(() => {
     getAnalysisJobs()
   }, [])
+
+  useEffect(() => {
+    getAnalysisJobs()
+  }, [currentPage])
 
   return (
     <Layout>
@@ -248,7 +261,10 @@ const AnalysisJobsPage = (): ReactElement => {
                   <tbody className="bg-white divide-y divide-gray-200">
                     {!!analysisJobs.length &&
                       analysisJobs.map((n) => (
-                        <tr className="transition-all hover:bg-gray-100 hover:shadow-lg">
+                        <tr
+                          key={n.id}
+                          className="transition-all hover:bg-gray-100 hover:shadow-lg"
+                        >
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="text-sm text-gray-900">
                               {new Date(Date.parse(n.created)).toLocaleString()}
@@ -281,6 +297,19 @@ const AnalysisJobsPage = (): ReactElement => {
                       ))}
                   </tbody>
                 </table>
+              </div>
+              <div className="flex justify-center items-center space-x-4 mt-4">
+                <button
+                  disabled={currentPage === 1}
+                  onClick={handleOnPreviousPageClick}
+                  className="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm disabled:cursor-default disabled:text-slate-500 disabled:bg-gray-100"
+                >{`<`}</button>
+                <div className="text-slate-500">{`${currentPage} / ${pageCount}`}</div>
+                <button
+                  disabled={currentPage === pageCount}
+                  onClick={handleOnNextPageClick}
+                  className="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm disabled:cursor-default disabled:text-slate-500 disabled:bg-gray-100"
+                >{`>`}</button>
               </div>
             </div>
           </div>
