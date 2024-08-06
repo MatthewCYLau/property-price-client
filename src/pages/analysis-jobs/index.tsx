@@ -221,46 +221,46 @@ const AnalysisJobsPage = (): ReactElement => {
           <Loader />
         ) : (
           <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-              <div className="overflow-hidden border-b border-gray-200 rounded-md shadow-md">
-                <table className="min-w-full overflow-x-scroll divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
-                      >
-                        Created
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
-                      >
-                        Postcode
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
-                      >
-                        Transaction price
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
-                      >
-                        Complete
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
-                      >
-                        Action
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {!!analysisJobs.length &&
-                      analysisJobs.map((n) => (
+            {!!analysisJobs.length ? (
+              <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                <div className="overflow-hidden border-b border-gray-200 rounded-md shadow-md">
+                  <table className="min-w-full overflow-x-scroll divide-y divide-gray-200">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+                        >
+                          Created
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+                        >
+                          Postcode
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+                        >
+                          Transaction price
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+                        >
+                          Complete
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+                        >
+                          Action
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      {analysisJobs.map((n) => (
                         <tr
                           key={n.id}
                           className="transition-all hover:bg-gray-100 hover:shadow-lg"
@@ -295,23 +295,28 @@ const AnalysisJobsPage = (): ReactElement => {
                           </td>
                         </tr>
                       ))}
-                  </tbody>
-                </table>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="flex justify-center items-center space-x-4 mt-4">
+                  <button
+                    disabled={currentPage === 1}
+                    onClick={handleOnPreviousPageClick}
+                    className="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm disabled:cursor-default disabled:text-slate-500 disabled:bg-gray-100"
+                  >{`<`}</button>
+                  <div className="text-slate-500">{`${currentPage} / ${pageCount}`}</div>
+                  <button
+                    disabled={currentPage === pageCount}
+                    onClick={handleOnNextPageClick}
+                    className="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm disabled:cursor-default disabled:text-slate-500 disabled:bg-gray-100"
+                  >{`>`}</button>
+                </div>
               </div>
-              <div className="flex justify-center items-center space-x-4 mt-4">
-                <button
-                  disabled={currentPage === 1}
-                  onClick={handleOnPreviousPageClick}
-                  className="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm disabled:cursor-default disabled:text-slate-500 disabled:bg-gray-100"
-                >{`<`}</button>
-                <div className="text-slate-500">{`${currentPage} / ${pageCount}`}</div>
-                <button
-                  disabled={currentPage === pageCount}
-                  onClick={handleOnNextPageClick}
-                  className="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm disabled:cursor-default disabled:text-slate-500 disabled:bg-gray-100"
-                >{`>`}</button>
+            ) : (
+              <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                <p>No analysis jobs!</p>
               </div>
-            </div>
+            )}
           </div>
         )}
       </div>
