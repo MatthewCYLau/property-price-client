@@ -3,7 +3,8 @@ import {
   useState,
   useContext,
   ChangeEvent,
-  useEffect
+  useEffect,
+  useRef
 } from 'react'
 import api from '../../utils/api'
 import cn from 'classnames'
@@ -57,6 +58,7 @@ const UpdateUserPage = (): ReactElement => {
   const [searchValue, setSearchValue] = useState<SearchValues>({
     searchTerm: ''
   })
+  const ref = useRef<HTMLDivElement>(null)
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value })
@@ -124,6 +126,17 @@ const UpdateUserPage = (): ReactElement => {
       })
     }
   }
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent): void {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setShowDropdown(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  })
 
   return (
     <Layout>
@@ -172,6 +185,7 @@ const UpdateUserPage = (): ReactElement => {
             </button>
             {showDropdown && (
               <div
+                ref={ref}
                 id="dropdown-menu"
                 className="absolute w-full right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 p-1 space-y-1"
               >
