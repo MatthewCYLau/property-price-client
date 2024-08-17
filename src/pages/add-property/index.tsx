@@ -26,7 +26,7 @@ const AddPropertyPage = (): ReactElement => {
     if (file) {
       formData.append('file', file)
       await api.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/properties/import-csv`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/properties/import-from-csv`,
         formData,
         {
           headers: {
