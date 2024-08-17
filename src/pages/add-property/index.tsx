@@ -1,7 +1,8 @@
-import { ReactElement, useState, ChangeEvent } from 'react'
+import { ReactElement, useState, ChangeEvent, useEffect } from 'react'
 import api from '../../utils/api'
 import { useNavigate } from 'react-router-dom'
 import CtaButton from '../../components/cta-button'
+import CheckIcon from '../../components/icons/check-icon'
 import Layout from '../../components/layout'
 interface Values {
   listingUrl: string
@@ -11,11 +12,40 @@ interface Values {
 
 const AddPropertyPage = (): ReactElement => {
   const navigate = useNavigate()
+  const [file, setFile] = useState<File>()
+
   const [formValues, setFormValues] = useState<Values>({
     listingUrl: '',
     askingPrice: 0,
     address: ''
   })
+  const [uploadSuccess, setUploadSuccess] = useState<boolean>(false)
+  const uploadFile = async () => {
+    setUploadSuccess(false)
+    const formData = new FormData()
+    if (file) {
+      formData.append('file', file)
+      await api.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/properties/import-csv`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      )
+      setUploadSuccess(true)
+    }
+  }
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFile(e.target.files[0])
+    }
+  }
+
+  useEffect(() => {
+    uploadFile()
+  }, [file])
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value })
@@ -87,6 +117,13 @@ const AddPropertyPage = (): ReactElement => {
             <CtaButton copy="Add Property" />
           </div>
         </form>
+      </div>
+      <div className="mb-6">
+        <label className="block text-gray-700">Import from CSV</label>
+        <div className="flex">
+          <input id="file_input" type="file" onChange={handleFileChange} />
+          {uploadSuccess && <CheckIcon />}
+        </div>
       </div>
     </Layout>
   )
