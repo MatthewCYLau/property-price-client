@@ -12,7 +12,7 @@ interface Values {
 
 const AddPropertyPage = (): ReactElement => {
   const navigate = useNavigate()
-  const [cloudStorageObjectUrl, setCloudStorageObjectUrl] = useState<string>('')
+  const [objectUrl, setObjectUrl] = useState<string>('')
   const [file, setFile] = useState<File>()
 
   const [formValues, setFormValues] = useState<Values>({
@@ -35,7 +35,7 @@ const AddPropertyPage = (): ReactElement => {
           }
         }
       )
-      setCloudStorageObjectUrl(data.url)
+      setObjectUrl(data.url)
       setUploadSuccess(true)
     }
   }
@@ -55,7 +55,24 @@ const AddPropertyPage = (): ReactElement => {
 
   const importFromCsvSubmitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault()
-    console.log(cloudStorageObjectUrl)
+    try {
+      await api.post(
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/properties/import-from-cloud-storage`,
+        {
+          objectUrl
+        },
+        {
+          headers: {
+            'content-type': 'application/json'
+          }
+        }
+      )
+      navigate('/dashboard')
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   const submitHandler = async (e: React.SyntheticEvent) => {
