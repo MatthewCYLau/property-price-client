@@ -12,6 +12,7 @@ interface Values {
 
 const AddPropertyPage = (): ReactElement => {
   const navigate = useNavigate()
+  const [cloudStorageObjectUrl, setCloudStorageObjectUrl] = useState<string>('')
   const [file, setFile] = useState<File>()
 
   const [formValues, setFormValues] = useState<Values>({
@@ -25,8 +26,8 @@ const AddPropertyPage = (): ReactElement => {
     const formData = new FormData()
     if (file) {
       formData.append('file', file)
-      await api.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/properties/import-from-csv`,
+      const { data } = await api.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/files`,
         formData,
         {
           headers: {
@@ -34,6 +35,7 @@ const AddPropertyPage = (): ReactElement => {
           }
         }
       )
+      setCloudStorageObjectUrl(data.url)
       setUploadSuccess(true)
     }
   }
@@ -49,6 +51,11 @@ const AddPropertyPage = (): ReactElement => {
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value })
+  }
+
+  const importFromCsvSubmitHandler = async (e: React.SyntheticEvent) => {
+    e.preventDefault()
+    console.log(cloudStorageObjectUrl)
   }
 
   const submitHandler = async (e: React.SyntheticEvent) => {
@@ -118,12 +125,19 @@ const AddPropertyPage = (): ReactElement => {
           </div>
         </form>
       </div>
-      <div className="mb-6">
-        <label className="block text-gray-700">Import from CSV</label>
-        <div className="flex">
-          <input id="file_input" type="file" onChange={handleFileChange} />
-          {uploadSuccess && <CheckIcon />}
-        </div>
+      <div className="grid grid-cols-1 gap-5 mt-6 sm:grid-cols-2 lg:grid-cols-3">
+        <form onSubmit={importFromCsvSubmitHandler}>
+          <div className="mb-6">
+            <label className="block text-gray-700">Import from CSV</label>
+            <div className="flex">
+              <input id="file_input" type="file" onChange={handleFileChange} />
+              {uploadSuccess && <CheckIcon />}
+            </div>
+          </div>
+          <div className="mb-6">
+            <CtaButton copy="Import From CSV" />
+          </div>
+        </form>
       </div>
     </Layout>
   )
