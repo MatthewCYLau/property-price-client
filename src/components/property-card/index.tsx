@@ -22,8 +22,8 @@ const isNewProperty = (created: string) => {
 }
 
 const getAvatarImage = (avatarUrl: string) => {
-  const imageFormats = ['jpeg', 'png']
-  if (imageFormats.some((n) => avatarUrl.includes(n))) {
+  const imageFormats = ['jpeg', 'png', 'jpg']
+  if (imageFormats.some((n) => avatarUrl.toLowerCase().includes(n))) {
     return avatarUrl
   } else {
     return `/house-${avatarUrl.toString()}.png`
