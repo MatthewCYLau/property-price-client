@@ -4,5 +4,5 @@ export const convertDateToValidFormet = (date: Date): string => {
     date.getMonth() < 9
       ? '0' + (date.getMonth() + 1).toString()
       : date.getMonth() + 1
-  return `${dateString}-${monthString}-${date.getFullYear()}`
+  return `${date.getFullYear()}-${monthString}-${dateString}`
 }

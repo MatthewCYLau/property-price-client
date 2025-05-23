@@ -2,5 +2,5 @@ import { expect, test } from 'vitest'
 import { convertDateToValidFormet } from '../src/utils/date'
 
 test('Converts date to valid format', () => {
-  expect(convertDateToValidFormet(new Date('2019-01-16'))).toBe('16-01-2019')
+  expect(convertDateToValidFormet(new Date('01-16-2019'))).toBe('2019-01-16')
 })

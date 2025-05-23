@@ -78,7 +78,7 @@ const StatisticsPage = (): ReactElement => {
           const url = window.URL.createObjectURL(new Blob([response.data]))
           const link = document.createElement('a')
           link.href = url
-          const fileName = `${new Date().toLocaleDateString()}.csv`
+          const fileName = `export-properties-${new Date().toLocaleDateString()}.csv`
           link.setAttribute('download', fileName)
           document.body.appendChild(link)
           link.click()
